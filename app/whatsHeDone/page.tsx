@@ -4,11 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import "./whatsHeDone.css";
 
 const buttons = [
-  { id: 1, imageUrl: "/file.svg", top: "40%", left: "40%" },
-  { id: 2, imageUrl: "/globe.svg", top: "60%", left: "60%" },
-  { id: 3, imageUrl: "/next.svg", top: "50%", left: "30%" },
-  { id: 4, imageUrl: "/vercel.svg", top: "30%", left: "70%" },
-  { id: 5, imageUrl: "/window.svg", top: "70%", left: "20%" },
+  { id: 1, imageUrl: "/file.svg", top: "40%", left: "40%", repoUrl: "./" },
+  { id: 2, imageUrl: "/globe.svg", top: "60%", left: "60%", repoUrl: "./" },
+  { id: 3, imageUrl: "/next.svg", top: "50%", left: "30%", repoUrl: "./" },
+  { id: 4, imageUrl: "/vercel.svg", top: "30%", left: "70%", repoUrl: "./" },
+  { id: 5, imageUrl: "/window.svg", top: "70%", left: "20%", repoUrl: "./" },
 ];
 
 export default function WhatsHeDone() {
@@ -101,7 +101,7 @@ export default function WhatsHeDone() {
           <h1 className="title">What's He Done</h1>
         </div>
         {buttons.map((button) => (
-          <a href="./" key={button.id}>
+          <a href={button.repoUrl} key={button.id}>
             <img
               src={button.imageUrl}
               className="scroll-button"
