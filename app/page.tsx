@@ -1,4 +1,3 @@
-"use clint";
 import ImportantText from "@/components/ImportantText";
 import WhatsHeDoing from "@/components/WhatsHeDoing";
 

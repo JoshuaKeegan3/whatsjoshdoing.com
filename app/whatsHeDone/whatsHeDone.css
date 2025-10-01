@@ -1,0 +1,51 @@
+.canvas {
+    height: 100vh;
+    width: 100vw;
+    overflow: scroll;
+    position: relative;
+    cursor: grab;
+}
+
+.canvas.grabbing {
+    cursor: grabbing;
+    user-select: none;
+}
+
+.canvas-content {
+    width: 300vmax;
+    height: 300vmax;
+    position: relative;
+}
+
+.center-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.title {
+    font-size: 4rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
+
+.scroll-button {
+    opacity: 0;
+    transform: translate(-100px, -50px) scale(0.5);
+    transition:
+        opacity 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+        transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    padding: 20px 40px;
+    font-size: 1.8rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+    position: absolute;
+}
+
+.scroll-button.visible {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+}

@@ -1,7 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-export default function ImportantText(props: any) {
+type ImporantTextProps = {
+  animate_text?: boolean;
+  zoom: boolean;
+  text: string;
+};
+export default function ImportantText(props: ImporantTextProps) {
   const [animateText, setAnimateText] = useState(false);
 
   useEffect(() => {

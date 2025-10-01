@@ -3,6 +3,8 @@
 import { useQuery } from "convex/react";
 import ImportantText from "@/components/ImportantText";
 import { api } from "../convex/_generated/api";
+import Link from "next/link";
+import z from "zod";
 
 type Activity = {
   _id: string;
@@ -10,7 +12,8 @@ type Activity = {
   file_name: string;
   class_name: string;
   function_name: string;
-  _creationTime: string;
+  repo_name: string;
+  _creationTime: number;
 };
 
 type Status = "Offline" | "Online";
@@ -22,19 +25,28 @@ const INACTIVE_OPTIONS = [
   "Wishing you a good day",
 ];
 
+const schema = z.object({
+  project_name: z.string(),
+  file_name: z.string(),
+  class_name: z.string(),
+  function_name: z.string(),
+  repo_name: z.string(),
+  // readme: z.string(),
+  _creationTime: z.number(),
+});
+
 export default function WhatsHeDoing() {
-  const activities: any = useQuery(api.activity.get);
-  if (activities == undefined) {
+  const res = useQuery(api.activity.get);
+  if (res == undefined) {
     return;
   }
-  let project_name = activities[0].project_name;
-  let file_name = activities[0].file_name;
-  let class_name = activities[0].class_name;
-  let function_name = activities[0].function_name;
-  // let repo = activities[0].repo;
-  // let readme = activities[0].readme;
 
-  let creation_time = activities[0]._creationTime;
+  const activities = schema.parse(res[0]);
+  let project_name = activities.project_name;
+  let file_name = activities.file_name;
+  let class_name = activities.class_name;
+  let function_name = activities.function_name;
+  let creation_time = activities._creationTime;
   let now = new Date().getTime();
 
   // if the time difference is greater than 60 minutes
@@ -47,7 +59,7 @@ export default function WhatsHeDoing() {
     status_marker = (
       <div className="text-3xl flex flex-row p-4 rounded-lg">
         <span className="relative flex size-3">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75"></span>{" "}
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75"></span>
           <span className="relative inline-flex size-3 rounded-full bg-emerald-500"></span>
         </span>
       </div>
@@ -77,16 +89,37 @@ export default function WhatsHeDoing() {
       </div>
     );
     status_text = (
-      <p className="text-3xl flex flex-row p-4 rounded-lg">
-        {INACTIVE_OPTIONS[Math.floor(INACTIVE_OPTIONS.length * Math.random())]}
-      </p>
+      <>
+        <p className="text-3xl flex flex-row p-4 rounded-lg">
+          {
+            INACTIVE_OPTIONS[
+              Math.floor(INACTIVE_OPTIONS.length * Math.random())
+            ]
+          }
+        </p>
+      </>
     );
   }
 
   return (
-    <div className="fade-in leading-normal text-3xl flex flex-row p-4 rounded-lg">
-      {status_text}
-      {status_marker}
+    <div>
+      <div className="fade-in leading-normal text-3xl flex flex-row p-4 rounded-lg">
+        {status_text}
+        {status_marker}
+      </div>
+      {status == "Offline" && (
+        <p className="fade-in text-3xl flex flex-row p-4 rounded-lg">
+          Click
+          <Link href="whatsHeDone">
+            <ImportantText
+              text="Here"
+              animate_text={true}
+              zoom={false}
+            ></ImportantText>{" "}
+          </Link>
+          to check out what he has done
+        </p>
+      )}
     </div>
   );
 }
