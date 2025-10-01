@@ -3,13 +3,53 @@
 import { useEffect, useRef, useState } from "react";
 import "./whatsHeDone.css";
 
-const buttons = [
-  { id: 1, imageUrl: "/file.svg", top: "40%", left: "40%", repoUrl: "./" },
-  { id: 2, imageUrl: "/globe.svg", top: "60%", left: "60%", repoUrl: "./" },
-  { id: 3, imageUrl: "/next.svg", top: "50%", left: "30%", repoUrl: "./" },
-  { id: 4, imageUrl: "/vercel.svg", top: "30%", left: "70%", repoUrl: "./" },
-  { id: 5, imageUrl: "/window.svg", top: "70%", left: "20%", repoUrl: "./" },
+const repositories = [
+  { repoUrl: "./", imageUrl: "/file.svg" },
+  { repoUrl: "./", imageUrl: "/globe.svg" },
+  { repoUrl: "./", imageUrl: "/next.svg" },
+  { repoUrl: "./", imageUrl: "/vercel.svg" },
+  { repoUrl: "./", imageUrl: "/window.svg" },
+  { repoUrl: "./", imageUrl: "/file.svg" },
+  { repoUrl: "./", imageUrl: "/globe.svg" },
+  { repoUrl: "./", imageUrl: "/next.svg" },
+  { repoUrl: "./", imageUrl: "/vercel.svg" },
+  { repoUrl: "./", imageUrl: "/window.svg" },
+  { repoUrl: "./", imageUrl: "/file.svg" },
+  { repoUrl: "./", imageUrl: "/globe.svg" },
+  { repoUrl: "./", imageUrl: "/next.svg" },
 ];
+
+const generateButtons = (repos: typeof repositories) => {
+  const rings = [
+    { count: 5, radius: 10 },
+    { count: 8, radius: 20 },
+  ];
+
+  let buttons: any[] = [];
+  let repoIndex = 0;
+
+  rings.forEach((ring, ringIndex) => {
+    const angle_increment = (2 * Math.PI) / ring.count;
+    for (let i = 0; i < ring.count; i++) {
+      if (repoIndex >= repos.length) break;
+      const angle = i * angle_increment;
+      const left = 50 + ring.radius * Math.cos(angle);
+      const top = 50 + ring.radius * Math.sin(angle);
+      buttons.push({
+        id: repoIndex,
+        imageUrl: repos[repoIndex].imageUrl,
+        top: `${top}%`,
+        left: `${left}%`,
+        repoUrl: repos[repoIndex].repoUrl,
+      });
+      repoIndex++;
+    }
+  });
+
+  return buttons;
+};
+
+const buttons = generateButtons(repositories);
 
 export default function WhatsHeDone() {
   const canvasRef = useRef<HTMLDivElement>(null);
@@ -39,7 +79,6 @@ export default function WhatsHeDone() {
       observer.observe(button);
     });
 
-    // Center the view on load
     if (canvasRef.current && canvasContentRef.current) {
       const canvas = canvasRef.current;
       const canvasContent = canvasContentRef.current;
@@ -67,8 +106,8 @@ export default function WhatsHeDone() {
     e.preventDefault();
     const x = e.pageX - canvasRef.current.offsetLeft;
     const y = e.pageY - canvasRef.current.offsetTop;
-    const walkX = (x - startX) * 2; // The multiplier determines the scroll speed
-    const walkY = (y - startY) * 2;
+    const walkX = (x - startX) * 1; // The multiplier determines the scroll speed
+    const walkY = (y - startY) * 1;
     canvasRef.current.scrollLeft = scrollLeftStart - walkX;
     canvasRef.current.scrollTop = scrollTopStart - walkY;
   };
@@ -101,7 +140,12 @@ export default function WhatsHeDone() {
           <h1 className="title">What's He Done</h1>
         </div>
         {buttons.map((button) => (
-          <a href={button.repoUrl} key={button.id}>
+          <a
+            href={button.repoUrl}
+            key={button.id}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <img
               src={button.imageUrl}
               className="scroll-button"
