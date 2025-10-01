@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import "./whatsHeDone.css";
+import LeetCodeStats from "@/components/LeetCodeStats";
 
 const repositories = [
   { repoUrl: "./", imageUrl: "/file.svg" },
@@ -138,6 +139,7 @@ export default function WhatsHeDone() {
       <div className="canvas-content" ref={canvasContentRef}>
         <div className="center-content">
           <h1 className="title">What's He Done</h1>
+          <LeetCodeStats />
         </div>
         {buttons.map((button) => (
           <a

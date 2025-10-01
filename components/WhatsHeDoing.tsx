@@ -90,13 +90,13 @@ export default function WhatsHeDoing() {
     );
     status_text = (
       <>
-        <p className="text-3xl flex flex-row p-4 rounded-lg">
+        <div className="text-3xl flex flex-row p-4 rounded-lg">
           {
             INACTIVE_OPTIONS[
               Math.floor(INACTIVE_OPTIONS.length * Math.random())
             ]
           }
-        </p>
+        </div>
       </>
     );
   }
