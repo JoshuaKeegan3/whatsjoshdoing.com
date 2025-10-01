@@ -37,12 +37,14 @@
     transition:
         opacity 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55),
         transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-    padding: 20px 40px;
-    font-size: 1.8rem;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
     cursor: pointer;
     position: absolute;
+    border: 3px solid #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .scroll-button.visible {
