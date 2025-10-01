@@ -21,8 +21,8 @@ const repositories = [
 
 const generateButtons = (repos: typeof repositories) => {
   const rings = [
-    { count: 5, radius: 10 },
-    { count: 8, radius: 20 },
+    { count: 5, radius: 7 },
+    { count: 8, radius: 11 },
   ];
 
   let buttons: any[] = [];
