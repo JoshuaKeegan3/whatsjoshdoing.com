@@ -1,33 +1,42 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import ImportantText from "@/components/ImportantText";
-import WhatsHeDoing from "@/components/WhatsHeDoing";
-import Arrow from "@/components/Arrow";
-
+import React, { useState, useEffect } from "react";
 export default function Home() {
-  const [playAnimation, setPlayAnimation] = useState(false);
-
+  const [rollerLocation, setRollerLocation] = useState(0);
+  const [active, setActive] = useState(false);
   useEffect(() => {
-    setPlayAnimation(true);
+    const timer = setInterval(() => {
+      setRollerLocation((prev) => Math.max(prev + 1, 0));
+      setActive((prev) => !prev);
+      console.log("test");
+    }, 2500);
+    return () => clearInterval(timer);
   }, []);
 
   return (
-    <div className="h-screen flex justify-center pt-64">
-      <div className="flex flex-col items-center">
-        <div className="leading-normal text-3xl flex flex-row p-4 rounded-lg">
-          <p className="fade-in">What is</p>
-          <ImportantText zoom={true} text="Josh Keegan" />
-          <p className="fade-in">up to?</p>
+    <div className="center flex-col">
+      <div className="flex items-center justify-center">
+        <h1 className="whitespace-nowrap">Whats Josh</h1>
+        <div className="roller">
+          <span
+            id="rolltext"
+            style={{ animationPlayState: active ? "running" : "paused" }}
+          >
+            Done
+            <br />
+            Doing
+            <br />
+            Thinking
+            <br />
+            Done
+            <br />
+            Doing
+            <br />
+            Thinking
+          </span>
         </div>
-        <WhatsHeDoing />
       </div>
-      <div className={`arrow-container ${playAnimation ? "animate-hud" : ""}`}>
-        <a href="/whatsHeDone">
-          <Arrow />
-        </a>
-      </div>
-      {playAnimation && <div className="pulse"></div>}
+      <div className="flex-col">Test</div>
     </div>
   );
 }

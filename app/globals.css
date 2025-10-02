@@ -3,6 +3,93 @@
 
 @custom-variant dark (&:is(.dark *));
 
+.roller {
+    height: 12.125rem;
+    line-height: 4rem;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    width: 20rem;
+    padding-left: 1rem;
+    color: #f1faee;
+}
+
+.center {
+    max-width: fit-content;
+    font-size: 4rem;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.roller #rolltext {
+    position: absolute;
+    text-align: left;
+    top: 0;
+    animation: slide 10s infinite;
+    animation-play-state: paused;
+}
+
+@keyframes slide {
+    0% {
+        top: 0rem;
+    }
+    25% {
+        top: 0rem;
+    }
+    50% {
+        top: -4rem;
+    }
+    75% {
+        top: -8rem;
+    }
+    100% {
+        top: -12rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    h1 {
+        text-align: center;
+        text-transform: uppercase;
+        color: #f1faee;
+        font-size: 4rem;
+    }
+
+    .roller {
+        height: 2.6rem;
+        line-height: 2.125rem;
+    }
+
+    #spare-time {
+        font-size: 1rem;
+        letter-spacing: 0.1rem;
+    }
+
+    .roller #rolltext {
+        animation: slide-mob 5s infinite;
+    }
+
+    @keyframes slide-mob {
+        0% {
+            top: 0;
+        }
+        25% {
+            top: -2.125rem;
+        }
+        50% {
+            top: -4.25rem;
+        }
+        72.5% {
+            top: -6.375rem;
+        }
+    }
+}
 @theme inline {
     --color-background: var(--background);
     --color-foreground: var(--foreground);
