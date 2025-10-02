@@ -1,26 +1,33 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { Activity, Lightbulb, Briefcase } from "lucide-react";
 export default function Home() {
   const [rollerLocation, setRollerLocation] = useState(0);
   const [active, setActive] = useState(false);
   useEffect(() => {
     const timer = setInterval(() => {
-      setRollerLocation((prev) => Math.max(prev + 1, 0));
+      if (active) {
+        setRollerLocation((prev) => (prev <= 3 ? prev + 1 : 0));
+        // console.log(rollerLocation);
+      }
+
       setActive((prev) => !prev);
-      console.log("test");
-    }, 2500);
+    }, 3000);
     return () => clearInterval(timer);
-  }, []);
+  }, [rollerLocation, active]);
 
   return (
     <div className="center flex-col">
       <div className="flex items-center justify-center">
         <h1 className="whitespace-nowrap">Whats Josh</h1>
-        <div className="roller">
+        <div className="roller pb-50">
           <span
             id="rolltext"
-            style={{ animationPlayState: active ? "running" : "paused" }}
+            style={{
+              animationPlayState: active ? "running" : "paused",
+              textTransform: "uppercase",
+            }}
           >
             Done
             <br />
@@ -36,7 +43,11 @@ export default function Home() {
           </span>
         </div>
       </div>
-      <div className="flex-col">Test</div>
+      <div className="flex pt-10 gap-4">
+        <Activity size={48} />
+        <Lightbulb size={48} />
+        <Briefcase size={48} />
+      </div>
     </div>
   );
 }

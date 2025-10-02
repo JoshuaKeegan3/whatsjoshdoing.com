@@ -4,13 +4,14 @@
 @custom-variant dark (&:is(.dark *));
 
 .roller {
-    height: 12.125rem;
+    height: 12rem;
     line-height: 4rem;
     position: relative;
     overflow: hidden;
     display: flex;
     width: 20rem;
     padding-left: 1rem;
+    top: 5px;
     color: #f1faee;
 }
 
@@ -31,21 +32,17 @@
     position: absolute;
     text-align: left;
     top: 0;
-    animation: slide 10s infinite;
-    animation-play-state: paused;
+    animation: slide 9s infinite;
 }
 
 @keyframes slide {
     0% {
         top: 0rem;
     }
-    25% {
-        top: 0rem;
-    }
-    50% {
+    33% {
         top: -4rem;
     }
-    75% {
+    66% {
         top: -8rem;
     }
     100% {
