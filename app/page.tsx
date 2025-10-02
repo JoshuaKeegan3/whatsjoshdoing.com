@@ -22,9 +22,7 @@ export default function Home() {
         </div>
         <WhatsHeDoing />
       </div>
-      <div
-        className={`arrow-container ${playAnimation ? "animate-arrow" : ""}`}
-      >
+      <div className={`arrow-container ${playAnimation ? "animate-hud" : ""}`}>
         <a href="/whatsHeDone">
           <Arrow />
         </a>
