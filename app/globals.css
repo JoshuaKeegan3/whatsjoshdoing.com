@@ -60,3 +60,58 @@ body {
     background-size: 200% 200%;
     animation: gradient-animation 3s ease infinite;
 }
+
+.arrow-container {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    z-index: 10;
+    color: black;
+    transition: color 0.5s ease;
+}
+
+.arrow-container:hover {
+    color: white;
+}
+
+.arrow-container.animate-arrow {
+    animation: highlight-arrow 1.5s 6s forwards;
+}
+
+.pulse {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    border: 2px solid rgba(255, 0, 255, 0.5);
+    border-radius: 50%;
+    animation: pulse-animation 3s 5s ease-out;
+}
+
+@keyframes pulse-animation {
+    from {
+        width: 0;
+        height: 0;
+        opacity: 0.5;
+    }
+    to {
+        width: 200vmax;
+        height: 200vmax;
+        opacity: 0;
+    }
+}
+
+@keyframes highlight-arrow {
+    0% {
+        color: black;
+    }
+    50% {
+        color: white;
+    }
+    100% {
+        color: black;
+    }
+}

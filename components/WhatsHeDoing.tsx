@@ -19,10 +19,10 @@ type Activity = {
 type Status = "Offline" | "Online";
 
 const INACTIVE_OPTIONS = [
-  "Definitely Vibing",
-  "Probably Rock Hugging",
-  "Dreaming of Code",
-  "Wishing you a good day",
+  "Inactive, but definitely Vibing",
+  "Inactive, but probably Rock Hugging",
+  "Inactive, but dreaming of Code",
+  "Inactive, but wishing you a good day",
 ];
 
 const schema = z.object({
@@ -108,7 +108,7 @@ export default function WhatsHeDoing() {
         {status_marker}
       </div>
       {status == "Offline" && (
-        <p className="fade-in text-3xl flex flex-row p-4 rounded-lg">
+        <div className="fade-in text-3xl flex flex-row p-4 rounded-lg">
           Click
           <Link href="whatsHeDone">
             <ImportantText
@@ -118,7 +118,7 @@ export default function WhatsHeDoing() {
             ></ImportantText>{" "}
           </Link>
           to check out what he has done
-        </p>
+        </div>
       )}
     </div>
   );

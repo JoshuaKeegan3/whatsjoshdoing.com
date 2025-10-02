@@ -1,7 +1,17 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import ImportantText from "@/components/ImportantText";
 import WhatsHeDoing from "@/components/WhatsHeDoing";
+import Arrow from "@/components/Arrow";
 
 export default function Home() {
+  const [playAnimation, setPlayAnimation] = useState(false);
+
+  useEffect(() => {
+    setPlayAnimation(true);
+  }, []);
+
   return (
     <div className="h-screen flex justify-center pt-64">
       <div className="flex flex-col items-center">
@@ -12,6 +22,14 @@ export default function Home() {
         </div>
         <WhatsHeDoing />
       </div>
+      <div
+        className={`arrow-container ${playAnimation ? "animate-arrow" : ""}`}
+      >
+        <a href="/whatsHeDone">
+          <Arrow />
+        </a>
+      </div>
+      {playAnimation && <div className="pulse"></div>}
     </div>
   );
 }
