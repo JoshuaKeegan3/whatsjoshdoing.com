@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Activity, Lightbulb, Briefcase } from "lucide-react";
 import clsx from "clsx";
+import Link from "next/link";
 
 export default function Home() {
   const [rollerLocation, setRollerLocation] = useState(0);
@@ -51,21 +52,27 @@ export default function Home() {
             "glowing-border text-white": rollerLocation === 0,
           })}
         >
-          <Lightbulb size={48} />
+          <Link href={"thinking"}>
+            <Lightbulb size={48} />
+          </Link>
         </div>
         <div
           className={clsx("p-4 rounded-lg flex justify-center items-center", {
             "glowing-border text-white": rollerLocation === 1,
           })}
         >
-          <Briefcase size={48} />
+          <Link href={"done"}>
+            <Briefcase size={48} />
+          </Link>
         </div>
         <div
           className={clsx("p-4 rounded-lg flex justify-center items-center", {
             "glowing-border text-white": rollerLocation === 2,
           })}
         >
-          <Activity size={48} />
+          <Link href={"doing"}>
+            <Activity size={48} />
+          </Link>
         </div>
       </div>
     </div>
