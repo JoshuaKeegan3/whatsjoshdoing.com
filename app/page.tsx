@@ -48,21 +48,21 @@ export default function Home() {
       <div className="flex pt-10 gap-4">
         <div
           className={clsx("p-4 rounded-lg flex justify-center items-center", {
-            "border-2 border-blue-500": rollerLocation === 0,
+            "glowing-border text-white": rollerLocation === 0,
           })}
         >
           <Lightbulb size={48} />
         </div>
         <div
           className={clsx("p-4 rounded-lg flex justify-center items-center", {
-            "border-2 border-green-500": rollerLocation === 1,
+            "glowing-border text-white": rollerLocation === 1,
           })}
         >
           <Briefcase size={48} />
         </div>
         <div
           className={clsx("p-4 rounded-lg flex justify-center items-center", {
-            "border-2 border-red-500": rollerLocation === 2,
+            "glowing-border text-white": rollerLocation === 2,
           })}
         >
           <Activity size={48} />
