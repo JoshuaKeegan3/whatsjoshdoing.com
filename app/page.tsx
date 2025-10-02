@@ -2,13 +2,15 @@
 
 import React, { useState, useEffect } from "react";
 import { Activity, Lightbulb, Briefcase } from "lucide-react";
+import clsx from "clsx";
+
 export default function Home() {
   const [rollerLocation, setRollerLocation] = useState(0);
   const [active, setActive] = useState(false);
   useEffect(() => {
     const timer = setInterval(() => {
       if (active) {
-        setRollerLocation((prev) => (prev <= 3 ? prev + 1 : 0));
+        setRollerLocation((prev) => (prev + 1) % 3);
         // console.log(rollerLocation);
       }
 
@@ -44,9 +46,27 @@ export default function Home() {
         </div>
       </div>
       <div className="flex pt-10 gap-4">
-        <Activity size={48} />
-        <Lightbulb size={48} />
-        <Briefcase size={48} />
+        <div
+          className={clsx("p-4 rounded-lg flex justify-center items-center", {
+            "border-2 border-blue-500": rollerLocation === 0,
+          })}
+        >
+          <Lightbulb size={48} />
+        </div>
+        <div
+          className={clsx("p-4 rounded-lg flex justify-center items-center", {
+            "border-2 border-green-500": rollerLocation === 1,
+          })}
+        >
+          <Briefcase size={48} />
+        </div>
+        <div
+          className={clsx("p-4 rounded-lg flex justify-center items-center", {
+            "border-2 border-red-500": rollerLocation === 2,
+          })}
+        >
+          <Activity size={48} />
+        </div>
       </div>
     </div>
   );
