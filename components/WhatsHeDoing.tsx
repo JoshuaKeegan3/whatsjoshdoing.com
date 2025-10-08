@@ -8,16 +8,6 @@ import z from "zod";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
-type Activity = {
-  _id: string;
-  project_name: string;
-  file_name: string;
-  class_name: string;
-  function_name: string;
-  repo_name: string;
-  _creationTime: number;
-};
-
 type Status = "Offline" | "Online";
 
 const INACTIVE_OPTIONS = [
@@ -44,12 +34,12 @@ export default function WhatsHeDoing() {
   }
 
   const activities = schema.parse(res[0]);
-  let project_name = activities.project_name;
-  let file_name = activities.file_name;
-  let class_name = activities.class_name;
-  let function_name = activities.function_name;
-  let creation_time = activities._creationTime;
-  let now = new Date().getTime();
+  const project_name = activities.project_name;
+  const file_name = activities.file_name;
+
+  const function_name = activities.function_name;
+  const creation_time = activities._creationTime;
+  const now = new Date().getTime();
 
   // if the time difference is greater than 60 minutes
   // set offline to true

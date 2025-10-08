@@ -1,7 +1,17 @@
 import { useState, useEffect } from "react";
 import "./LeetCodeStats.css";
 
-async function fetchLeetCodeCalendar(username: String): Promise<any> {
+type LeetCodeCalendar = {
+  [key: string]: number;
+};
+
+type LeetCodeResponse = {
+  submissionCalendar: string;
+};
+
+async function fetchLeetCodeCalendar(
+  username: string,
+): Promise<LeetCodeResponse | undefined> {
   const apiUrl = `https://alfa-leetcode-api.onrender.com/${username}/calendar`;
 
   try {
@@ -21,7 +31,9 @@ async function fetchLeetCodeCalendar(username: String): Promise<any> {
 }
 
 export default function LeetCodeStats() {
-  const [submissionData, setSubmissionData] = useState(null);
+  const [submissionData, setSubmissionData] = useState<LeetCodeCalendar | null>(
+    null,
+  );
   const [loading, setLoading] = useState(true);
   const leetcodeUsername = "JoshuaKeegan3";
 
@@ -35,7 +47,7 @@ export default function LeetCodeStats() {
     };
 
     fetchData();
-  }, []);
+  }, [leetcodeUsername]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -45,8 +57,8 @@ export default function LeetCodeStats() {
     return <div>Error fetching data.</div>;
   }
 
-  let date = new Date();
-  let utc_date_seconds: number = Math.floor(
+  const date = new Date();
+  const utc_date_seconds: number = Math.floor(
     Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 1000,
   );
 
@@ -54,9 +66,9 @@ export default function LeetCodeStats() {
 
   const cells = [];
   for (let i = 0; i < 30; i++) {
-    let current_date = utc_date_seconds - SECONDS_IN_DAY * i;
+    const current_date = utc_date_seconds - SECONDS_IN_DAY * i;
 
-    let submission_count = submissionData[current_date] || 0;
+    const submission_count = submissionData[current_date] || 0;
 
     let color_class = "heatmap-cell-0";
     if (submission_count > 0 && submission_count <= 1) {

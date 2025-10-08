@@ -1,5 +1,6 @@
-const Arrow = () => (
+const Arrow = ({ handleClick }: { handleClick: () => void }) => (
   <svg
+    onClick={handleClick}
     xmlns="http://www.w3.org/2000/svg"
     width="24"
     height="24"
@@ -9,9 +10,10 @@ const Arrow = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
+    className="animate-bounce cursor-pointer"
   >
-    <path d="M5 12h14" />
-    <path d="m12 5 7 7-7 7" />
+    <path d="M12 5v14" />
+    <path d="m19 12-7 7-7-7" />
   </svg>
 );
 

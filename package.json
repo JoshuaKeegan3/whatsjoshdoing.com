@@ -23,6 +23,7 @@
     "zod": "^4.1.11"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.2.5",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",

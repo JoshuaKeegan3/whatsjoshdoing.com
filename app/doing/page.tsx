@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import ImportantText from "@/components/ImportantText";
 import WhatsHeDoing from "@/components/WhatsHeDoing";
 

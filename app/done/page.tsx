@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import "./whatsHeDone.css";
 import LeetCodeStats from "@/components/LeetCodeStats";
@@ -20,16 +21,24 @@ const repositories = [
   { repoUrl: "./", imageUrl: "/next.svg" },
 ];
 
+type Button = {
+  id: number;
+  imageUrl: string;
+  top: string;
+  left: string;
+  repoUrl: string;
+};
+
 const generateButtons = (repos: typeof repositories) => {
   const rings = [
     { count: 5, radius: 7 },
     { count: 8, radius: 11 },
   ];
 
-  let buttons: any[] = [];
+  const buttons: Button[] = [];
   let repoIndex = 0;
 
-  rings.forEach((ring, ringIndex) => {
+  rings.forEach((ring) => {
     const angle_increment = (2 * Math.PI) / ring.count;
     for (let i = 0; i < ring.count; i++) {
       if (repoIndex >= repos.length) break;
@@ -138,7 +147,7 @@ export default function WhatsHeDone() {
     >
       <div className="canvas-content" ref={canvasContentRef}>
         <div className="center-content">
-          <h1 className="title">What's He Done</h1>
+          <h1 className="title">What&apos;s He Done</h1>
           <LeetCodeStats />
         </div>
         {buttons.map((button) => (
@@ -148,11 +157,13 @@ export default function WhatsHeDone() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <img
+            <Image
               src={button.imageUrl}
               className="scroll-button"
               style={{ top: button.top, left: button.left }}
               alt={`Project ${button.id}`}
+              width={100}
+              height={100}
             />
           </a>
         ))}
