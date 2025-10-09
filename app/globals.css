@@ -21,13 +21,24 @@ link {
     max-width: fit-content;
     flex-direction: column;
     font-size: 4rem;
-    height: 100vh;
+    height: 90vh;
     width: 100vh;
     display: flex;
     margin-left: auto;
     margin-right: auto;
     align-items: center;
     justify-content: center;
+    text-align: center;
+}
+
+.arrow-container {
+    max-width: fit-content;
+    flex-direction: column;
+    height: 10vh;
+    width: 100vh;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
 }
 
@@ -164,24 +175,6 @@ link {
 .animated-gradient {
     background-size: 200% 200%;
     animation: gradient-animation 3s ease infinite;
-}
-
-.arrow-container {
-    position: fixed;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-    z-index: 10;
-    color: black;
-    transition: color 0.5s ease;
-}
-
-.arrow-container:hover {
-    color: white;
-}
-
-.arrow-container.animate-hud {
-    animation: highlight-hud 1.5s 6s;
 }
 
 .pulse {

@@ -21,16 +21,6 @@ export default function Home() {
     return () => clearInterval(timer);
   }, [active]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (blurbRef.current) {
-        blurbRef.current.scrollIntoView({ behavior: "smooth" });
-      }
-    }, 5000); // Adjust the delay as needed
-
-    return () => clearTimeout(timer);
-  }, []);
-
   const handleClick = () => {
     if (blurbRef.current) {
       blurbRef.current.scrollIntoView({ behavior: "smooth" });
@@ -41,7 +31,7 @@ export default function Home() {
     <>
       <div className="center">
         <div className="flex items-center justify-center">
-          <h1 className="whitespace-nowrap">Whats Josh Keegan</h1>
+          <h1 className="whitespace-nowrap">What's Josh Keegan</h1>
           <div className="roller pb-50 fade-in">
             <span
               id="rolltext"
@@ -94,13 +84,17 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <Arrow handleClick={handleClick} />
+      <div className="fade-in arrow-container">
+        <Arrow handleClick={handleClick} />
+      </div>
       <div
         ref={blurbRef}
         className="text-white h-dvh w-dvw align-baseline text-xl"
       >
-        <h1 className="text-center text-3xl">Josh Keegan is a Software Fox</h1>
-        <p className="px-40">
+        <h1 className="pt-10 text-center text-3xl">
+          Josh Keegan is a Software Fox
+        </h1>
+        <div className="px-40">
           <br />I resonated with this term while listening to a{" "}
           <Link
             className=" text-red-500"
@@ -125,34 +119,66 @@ export default function Home() {
           Descartes, explaining how he discovered that geometry and number
           theory can be unified by parameterising a geometric plane with two
           real numbers. It is because of Descartes that we teach geometry with
-          numbers and not Euclids ruler and compass. While this is an Ancient
-          example Terence Tao also gives a personal anecdote of how he took the
-          famous Game of Life and applied it to the famously complex Navier
-          Stokes Equations in order to disprove a turbulent singularity.
+          numbers and not{" "}
+          <Link
+            className="text-red-500"
+            href="https://www.youtube.com/watch?v=M-MgQC6z3VU"
+          >
+            Euclids ruler and compass.
+          </Link>{" "}
+          While this is an Ancient example Terence Tao also gives a personal
+          anecdote of how he took the famous Game of Life and applied it to the
+          famously complex Navier Stokes Equations in order to disprove a
+          turbulent singularity.
           <br />
-          <br />I have:
+          <br />
+          This is a conclusion I came to personally. I had a teacher that told
+          us that Math is Applied Logic, Physics is applied Math. Chemistry is
+          just applied Physics. Biology is just applied Chemistry. As you can
+          imagine, this process can go on, however it is tedious. Software, I
+          reasoned, makes logic tangible, directly converting thought into
+          thing. The first time I created something was a game of Connect-Four
+          and the feeling of my thought becoming reality was electric. I choose
+          a carer in tech because of this feeling. Because if someone has a
+          problem, all I need do is think of the solution and it is theirs. This
+          doesn't exist outside the of tech. I choose to be a Software Fox
+          because to help, whoever, wherever, forever.
+          <br />
+          <br />
+          Somethings I've worked on include:
           <ul className="list-disc pl-12">
             <li>
-              Worked on Physics, Chemistry and Math Simulations, Safety-Critical
+              Physics, Chemistry and Math Simulations, Safety-Critical Systems,
+              AI, Data, Dashboards, and Games
             </li>
-            <li>Systems, AI, Data, Dashboards, and Games</li>
             <li>
-              Developed for Mobile, using React-Native, Flutter, Tauri and
+              Applications for Mobile, using React-Native, Flutter, Tauri and
               Svelte
             </li>
             <li>Both TUI and Desktop using the likes of QT or GPUI</li>
-            <li>Developed for Web using React, Next, Solid, HTML and Vue</li>
-            <li>
-              Used the 3 of the largest game engines Unreal, Godot and Unity
-              along with parser for the web and pygame
-            </li>
-            <li>Done programming contests, written documentation and tests</li>
+            <li>Web Apps using React, Next, Solid, HTML and Vue</li>
+            <li>Games using Unreal, Godot, Unity and parser for the web</li>
+            <li>Programming contests, written documentation and tests</li>
             <li>
               Contributed to open source, worked with government and helped
               small businesses
             </li>
+            <li>
+              Kept up to date with potential future technologies for example
+              Mojo and Mamba in AI
+            </li>
+            <li>
+              Enhanced my development workflow by choosing tools I believe in
+              and occasionally creating my own
+            </li>
+            <li>Discussed start-up ideas with investors</li>
           </ul>
-        </p>
+          <br />
+          And of course this means that my learning is not over. I am working
+          towards an Azure AI Engineer Associate qualification and have started
+          creating my own homelab to practice with VMs. I'm currently looking
+          for full-time work with other people with a similar passion for tech.
+        </div>
       </div>
     </>
   );
