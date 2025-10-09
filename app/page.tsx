@@ -31,7 +31,7 @@ export default function Home() {
     <>
       <div className="center">
         <div className="flex items-center justify-center">
-          <h1 className="whitespace-nowrap">What's Josh Keegan</h1>
+          <h1 className="whitespace-nowrap">What&apos;s Josh Keegan</h1>
           <div className="roller pb-50 fade-in">
             <span
               id="rolltext"
@@ -141,11 +141,11 @@ export default function Home() {
           and the feeling of my thought becoming reality was electric. I choose
           a carer in tech because of this feeling. Because if someone has a
           problem, all I need do is think of the solution and it is theirs. This
-          doesn't exist outside the of tech. I choose to be a Software Fox
+          doesn&apos;t exist outside the of tech. I choose to be a Software Fox
           because to help, whoever, wherever, forever.
           <br />
           <br />
-          Somethings I've worked on include:
+          Somethings I&apos;ve worked on include:
           <ul className="list-disc pl-12">
             <li>
               Physics, Chemistry and Math Simulations, Safety-Critical Systems,
@@ -176,8 +176,9 @@ export default function Home() {
           <br />
           And of course this means that my learning is not over. I am working
           towards an Azure AI Engineer Associate qualification and have started
-          creating my own homelab to practice with VMs. I'm currently looking
-          for full-time work with other people with a similar passion for tech.
+          creating my own homelab to practice with VMs. I&apos;m currently
+          looking for full-time work with other people with a similar passion
+          for tech.
         </div>
       </div>
     </>
