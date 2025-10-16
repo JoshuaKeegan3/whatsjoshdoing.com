@@ -6,17 +6,22 @@ type ImporantTextProps = {
   color?: boolean;
   zoom: boolean;
   text: string;
+  noanim?: boolean;
 };
 export default function ImportantText(props: ImporantTextProps) {
   const [animateText, setAnimateText] = useState(false);
 
   useEffect(() => {
+    if (props.noanim) {
+      setAnimateText(true);
+      return;
+    }
     const timer = setTimeout(() => {
       setAnimateText(true);
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [props.noanim]);
   return (
     <div
       className={`tracking-[-.01em] pl-1.5 pr-1.5 transition-all duration-700 ease-out transform

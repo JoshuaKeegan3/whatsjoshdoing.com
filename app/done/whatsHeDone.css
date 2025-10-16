@@ -52,3 +52,9 @@
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
 }
+
+.scroll-button.no-anim-visible {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    transition: none;
+}

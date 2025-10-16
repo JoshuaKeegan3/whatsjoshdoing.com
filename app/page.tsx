@@ -60,7 +60,7 @@ export default function Home() {
               "glowing-border text-white": rollerLocation === 1,
             })}
           >
-            <Link href={"thinking"}>
+            <Link href={"thinking?noanim=true"}>
               <Lightbulb size={48} />
             </Link>
           </div>
@@ -69,7 +69,7 @@ export default function Home() {
               "glowing-border text-white": rollerLocation === 2,
             })}
           >
-            <Link href={"done"}>
+            <Link href={"done?noanim=true"}>
               <Briefcase size={48} />
             </Link>
           </div>
@@ -78,7 +78,7 @@ export default function Home() {
               "glowing-border text-white": rollerLocation === 0,
             })}
           >
-            <Link href={"doing"}>
+            <Link href={"doing?noanim=true"}>
               <Activity size={48} />
             </Link>
           </div>

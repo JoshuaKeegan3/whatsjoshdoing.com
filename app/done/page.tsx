@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import "./whatsHeDone.css";
 import LeetCodeStats from "@/components/LeetCodeStats";
+import { useSearchParams } from "next/navigation";
 
 const repositories = [
   { repoUrl: "./", imageUrl: "/file.svg" },
@@ -69,8 +70,17 @@ export default function WhatsHeDone() {
   const [startY, setStartY] = useState(0);
   const [scrollLeftStart, setScrollLeftStart] = useState(0);
   const [scrollTopStart, setScrollTopStart] = useState(0);
+  const searchParams = useSearchParams();
+  const noanim = searchParams.get("noanim") === "true";
 
   useEffect(() => {
+    const buttonElements = document.querySelectorAll(".scroll-button");
+    if (noanim) {
+      buttonElements.forEach((button) => {
+        button.classList.add("no-anim-visible");
+      });
+      return;
+    }
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -84,7 +94,6 @@ export default function WhatsHeDone() {
       { threshold: 0.01, root: canvasRef.current },
     );
 
-    const buttonElements = document.querySelectorAll(".scroll-button");
     buttonElements.forEach((button) => {
       observer.observe(button);
     });
@@ -99,7 +108,7 @@ export default function WhatsHeDone() {
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [noanim]);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!canvasRef.current) return;
