@@ -139,7 +139,7 @@ export default function Home() {
           reasoned, makes logic tangible, directly converting thought into
           thing. The first time I created something was a game of Connect-Four
           and the feeling of my thought becoming reality was electric. I choose
-          a carer in tech because of this feeling. Because if someone has a
+          a career in tech because of this feeling. Because if someone has a
           problem, all I need do is think of the solution and it is theirs. This
           doesn&apos;t exist outside the of tech. I choose to be a Software Fox
           because to help, whoever, wherever, forever.
