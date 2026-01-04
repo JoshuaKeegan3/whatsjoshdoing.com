@@ -8,6 +8,8 @@ import clsx from "clsx";
 export default function Home() {
   const searchParams = useSearchParams();
   const noanim = searchParams.get("noanim") === "true";
+
+  // TODO: Add a description of what this is actually doing
   return (
     <div className="h-screen flex justify-center pt-64">
       <div className="flex flex-col items-center">

@@ -71,13 +71,13 @@ export default function LeetCodeStats() {
     const submission_count = submissionData[current_date] || 0;
 
     let color_class = "heatmap-cell-0";
-    if (submission_count > 0 && submission_count <= 1) {
-      color_class = "heatmap-cell-1";
-    } else if (submission_count > 1 && submission_count <= 2) {
-      color_class = "heatmap-cell-2";
-    } else if (submission_count > 2 && submission_count <= 3) {
-      color_class = "heatmap-cell-3";
-    } else if (submission_count > 3) {
+    if (submission_count > 0 /**&& submission_count <= 1**/) {
+    //   color_class = "heatmap-cell-1";
+    // } else if (submission_count > 1 && submission_count <= 2) {
+    //   color_class = "heatmap-cell-2";
+    // } else if (submission_count > 2 && submission_count <= 3) {
+    //   color_class = "heatmap-cell-3";
+    // } else if (submission_count > 3) {
       color_class = "heatmap-cell-4";
     }
 
