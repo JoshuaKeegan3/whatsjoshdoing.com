@@ -4,7 +4,9 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import "./whatsHeDone.css";
 import LeetCodeStats from "@/components/LeetCodeStats";
+import ZedUsageStats from "@/components/ZedUsageStats";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 const repositories = [
   { repoUrl: "./", imageUrl: "/file.svg" },
@@ -157,10 +159,14 @@ export default function WhatsHeDone() {
       <div className="canvas-content" ref={canvasContentRef}>
         <div className="center-content">
           <h1 className="title">What&apos;s He Done</h1>
-          <LeetCodeStats />
+          <span><p>Leetcode stats</p><p>Editor Usage <Popup>?</Popup></p></span>
+          <span>
+            <LeetCodeStats />
+            <ZedUsageStats/>
+          </span>
         </div>
         {buttons.map((button) => (
-          <a
+          <Link
             href={button.repoUrl}
             key={button.id}
             target="_blank"

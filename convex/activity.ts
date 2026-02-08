@@ -6,3 +6,10 @@ export const get = query({
     return await ctx.db.query("activity").collect();
   },
 });
+
+export const get30 = query({
+  args: {},
+  handler: async (ctx) => {
+    return await ctx.db.query("activity").take(30);
+  },
+});
