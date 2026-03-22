@@ -7,19 +7,7 @@ import LeetCodeStats from "@/components/LeetCodeStats";
 import { useSearchParams } from "next/navigation";
 
 const repositories = [
-  { repoUrl: "./", imageUrl: "/file.svg" },
-  { repoUrl: "./", imageUrl: "/globe.svg" },
-  { repoUrl: "./", imageUrl: "/next.svg" },
-  { repoUrl: "./", imageUrl: "/vercel.svg" },
-  { repoUrl: "./", imageUrl: "/window.svg" },
-  { repoUrl: "./", imageUrl: "/file.svg" },
-  { repoUrl: "./", imageUrl: "/globe.svg" },
-  { repoUrl: "./", imageUrl: "/next.svg" },
-  { repoUrl: "./", imageUrl: "/vercel.svg" },
-  { repoUrl: "./", imageUrl: "/window.svg" },
-  { repoUrl: "./", imageUrl: "/file.svg" },
-  { repoUrl: "./", imageUrl: "/globe.svg" },
-  { repoUrl: "./", imageUrl: "/next.svg" },
+  { repoUrl: "https://www.huntresearchgroup.org.uk/teaching/year2_203_waves2.html", imageUrl: "/electron.png" },
 ];
 
 type Button = {
@@ -144,7 +132,6 @@ export default function WhatsHeDone() {
       canvasRef.current.classList.remove("grabbing");
     }
   };
-  // TODO: add this as a link https://www.huntresearchgroup.org.uk/teaching/year2_203_waves2.html
 
   return (
     <div
