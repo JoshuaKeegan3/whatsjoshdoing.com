@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { Activity, Lightbulb, Briefcase } from "lucide-react";
-import clsx from "clsx";
 import Link from "next/link";
 import Arrow from "@/components/Arrow";
 
@@ -84,27 +83,21 @@ export default function Home() {
           }}
         >
           <div
-            className={clsx("p-4 rounded-lg flex justify-center items-center", {
-              "glowing-border text-white": rollerLocation === 1,
-            })}
+            className={`p-4 rounded-lg flex justify-center items-center${rollerLocation === 1 ? " glowing-border text-white" : ""}`}
           >
             <Link href={"thinking?noanim=true"}>
               <Lightbulb size={48} />
             </Link>
           </div>
           <div
-            className={clsx("p-4 rounded-lg flex justify-center items-center", {
-              "glowing-border text-white": rollerLocation === 2,
-            })}
+            className={`p-4 rounded-lg flex justify-center items-center${rollerLocation === 2 ? " glowing-border text-white" : ""}`}
           >
             <Link href={"done?noanim=true"}>
               <Briefcase size={48} />
             </Link>
           </div>
           <div
-            className={clsx("p-4 rounded-lg flex justify-center items-center", {
-              "glowing-border text-white": rollerLocation === 0,
-            })}
+            className={`p-4 rounded-lg flex justify-center items-center${rollerLocation === 0 ? " glowing-border text-white" : ""}`}
           >
             <Link href={"doing?noanim=true"}>
               <Activity size={48} />
@@ -120,10 +113,17 @@ export default function Home() {
         className="text-white h-dvh w-dvw align-baseline text-xl"
       >
         <h1 className="pt-10 text-center text-3xl">
-          Josh Keegan is a Software Fox
+          Josh Keegan is a Builder and a Fox
         </h1>
         <div className="px-40">
-          <br />I resonated with this term while listening to a{" "}
+        <br/>
+          AI has raised the skill floor, but it has also raised the ceiling. Anyone can write code now. What they can&apos;t do is build. The engineers who were always exceptional knew their tools deeply, understood how components fit together, and cared about the quality of what they shipped. They thought in systems. They suggested direction, made architectural decisions, and stayed curious. That thinking transfers, to data, to electronics, to the cloud.
+                   <br />
+                   <br />
+                   AI moved the bottleneck from the fingers to the mind. The things that once made great engineers special now make them extraordinary.
+          <br />
+          <br />
+          I resonated with the term fox while listening to a{" "}
           <Link
             className=" text-red-500"
             href="https://youtu.be/HUkBz-cdB-k?t=3258"
@@ -142,71 +142,30 @@ export default function Home() {
             analogies and adapt techniques from one area to solve problems in
             another.&quot;
           </p>
-          Terence Tao outlines the need for foxes, not simply as a swiss army
-          knife, but as a driving force for progress and innovation. He cites
-          Descartes, explaining how he discovered that geometry and number
-          theory can be unified by parameterising a geometric plane with two
-          real numbers. It is because of Descartes that we teach geometry with
-          numbers and not{" "}
+          We need Foxes as a driving force for progress and innovation. We used to do geometry with{' '}
           <Link
             className="text-red-500"
             href="https://www.youtube.com/watch?v=M-MgQC6z3VU"
           >
             Euclids ruler and compass.
           </Link>{" "}
-          While this is an Ancient example Terence Tao also gives a personal
+          Descartes, connected geometry and number
+          theory allowing the more intuative way of thinking about geometry that we teach today.
+          While this is an Ancient example Tao also gives a personal
           anecdote of how he took the famous Game of Life and applied it to the
           famously complex Navier Stokes Equations in order to disprove a
           turbulent singularity.
           <br />
           <br />
-          This is a conclusion I came to personally. I had a teacher that told
-          us that Math is Applied Logic, Physics is applied Math. Chemistry is
-          just applied Physics. Biology is just applied Chemistry. As you can
-          imagine, this process can go on, however it is tedious. Software, I
-          reasoned, makes logic tangible, directly converting thought into
+          Software, makes logic tangible, directly converting thought into
           thing. The first time I created something was a game of Connect-Four
           and the feeling of my thought becoming reality was electric. I choose
           a career in tech because of this feeling. Because if someone has a
           problem, all I need do is think of the solution and it is theirs. This
-          doesn&apos;t exist outside the of tech. I choose to be a Software Fox
-          because to help, whoever, wherever, forever.
+          doesn&apos;t exist outside the of tech.
           <br />
           <br />
-          Somethings I&apos;ve worked on include:
-          <ul className="list-disc pl-12">
-            <li>
-              Physics, Chemistry and Math Simulations, Safety-Critical Systems,
-              AI, Data, Dashboards, and Games
-            </li>
-            <li>
-              Applications for Mobile, using React-Native, Flutter, Tauri and
-              Svelte
-            </li>
-            <li>Both TUI and Desktop using the likes of QT or GPUI</li>
-            <li>Web Apps using React, Next, Solid, HTML and Vue</li>
-            <li>Games using Unreal, Godot, Unity and parser for the web</li>
-            <li>Programming contests, written documentation and tests</li>
-            <li>
-              Contributed to open source, worked with government and helped
-              small businesses
-            </li>
-            <li>
-              Kept up to date with potential future technologies for example
-              Mojo and Mamba in AI
-            </li>
-            <li>
-              Enhanced my development workflow by choosing tools I believe in
-              and occasionally creating my own
-            </li>
-            <li>Discussed start-up ideas with investors</li>
-          </ul>
-          <br />
-          And of course this means that my learning is not over. I am working
-          towards an Azure AI Engineer Associate qualification and have started
-          creating my own homelab to practice with VMs. I&apos;m currently
-          looking for full-time work with other people with a similar passion
-          for tech.
+
         </div>
       </div>
     </>
