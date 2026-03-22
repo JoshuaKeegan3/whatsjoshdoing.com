@@ -40,14 +40,11 @@ export default function WhatsHeDoing({ noanim }: { noanim?: boolean }) {
 
   const function_name = activities.function_name;
   const creation_time = activities._creationTime;
-  // todo: fix this regular expression
-  const repo_name = activities.repo_name.replaceAll("https:\/\/github\.com\/.+\/","").replaceAll(".git","")
+  const repo_name = activities.repo_name.replace(/https:\/\/github\.com\/[^/]+\//, "").replace(/\.git$/, "");
   const now = new Date().getTime();
 
-  // if the time difference is greater than 60 minutes
-  // set offline to true
-  let status: Status = 60 * 60 > now - creation_time ? "Online" : "Offline";
-  status = 60 * 60 < now - creation_time ? "Online" : "Offline";
+  // if the time difference is greater than 60 minutes, set offline
+  const status: Status = now - creation_time < 60 * 60 * 1000 ? "Online" : "Offline";
 
   let status_marker = undefined;
   let status_text = undefined;
@@ -139,7 +136,7 @@ export default function WhatsHeDoing({ noanim }: { noanim?: boolean }) {
           })}
         >
           Click
-          <Link href="whatsHeDone">
+          <Link href="done">
             <ImportantText
               text="Here"
               animate_text={true}
