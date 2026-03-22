@@ -4,6 +4,7 @@ import ImportantText from "@/components/ImportantText";
 import WhatsHeDoing from "@/components/WhatsHeDoing";
 import { useSearchParams } from "next/navigation";
 import clsx from "clsx";
+import { Suspense } from "react";
 
 import {
   HoverCard,
@@ -11,7 +12,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 
-export default function Home() {
+function DoingContent() {
   const searchParams = useSearchParams();
   const noanim = searchParams.get("noanim") === "true";
 
@@ -36,5 +37,13 @@ export default function Home() {
         <WhatsHeDoing noanim={noanim} />
       </div>
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense>
+      <DoingContent />
+    </Suspense>
   );
 }
