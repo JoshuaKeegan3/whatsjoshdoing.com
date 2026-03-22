@@ -21,18 +21,40 @@ export default function Home() {
     return () => clearInterval(timer);
   }, [active]);
 
+  const [revealed, setRevealed] = useState(false);
+
   const handleClick = () => {
     if (blurbRef.current) {
       blurbRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
 
+  useEffect(() => {
+    const revealTimer = setTimeout(() => setRevealed(true), 1500);
+    return () => clearTimeout(revealTimer);
+  }, []);
+
   return (
     <>
-      <div className="center">
+      <div
+        className="center"
+        style={{
+          height: revealed ? "90vh" : "100vh",
+          transition: "height 0.8s ease",
+        }}
+      >
         <div className="flex items-center justify-center">
           <h1 className="whitespace-nowrap">What&apos;s Josh Keegan</h1>
-          <div className="roller pb-50 fade-in">
+          <div
+            className="roller pb-50"
+            style={{
+              maxWidth: revealed ? "20rem" : "0",
+              opacity: revealed ? 1 : 0,
+              paddingLeft: revealed ? "1rem" : "0",
+              transition:
+                "max-width 0.7s ease, opacity 0.7s ease, padding-left 0.7s ease",
+            }}
+          >
             <span
               id="rolltext"
               style={{
@@ -54,7 +76,13 @@ export default function Home() {
             </span>
           </div>
         </div>
-        <div className="flex pt-10 gap-4 fade-in">
+        <div
+          className="flex pt-10 gap-4"
+          style={{
+            opacity: revealed ? 1 : 0,
+            transition: "opacity 0.7s ease 0.3s",
+          }}
+        >
           <div
             className={clsx("p-4 rounded-lg flex justify-center items-center", {
               "glowing-border text-white": rollerLocation === 1,
