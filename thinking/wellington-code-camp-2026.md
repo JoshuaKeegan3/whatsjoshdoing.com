@@ -42,3 +42,6 @@ Here were some notes and some interesting stats, musings and learnings.
 - I think has raised the floor and habits raise the ceiling, but you can also look at it the other way around 
 - You don't have to agree with all the speakers
 - Learnings = Reflections + Expereince
+- Save your post commands and test commands
+- Make your thoughts public so you don't have to share them with people
+- Make an internal cli
