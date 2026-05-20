@@ -16,15 +16,16 @@ const INACTIVE_OPTIONS = [
   "Inactive, but probably Rock Hugging",
   "Inactive, but dreaming of Code",
   "Inactive, but wishing you a good day",
+  "Power Systems Study",
+  "Masters of Engergy Study"
 ];
 
 const schema = z.object({
-  project_name: z.string(),
   file_name: z.string(),
   class_name: z.string(),
   function_name: z.string(),
   repo_name: z.string(),
-  readme: z.string(),
+  readme_preview: z.string(),
   _creationTime: z.number(),
 });
 
@@ -35,17 +36,15 @@ export default function WhatsHeDoing({ noanim }: { noanim?: boolean }) {
   }
 
   const activities = schema.parse(res[0]);
-  const project_name = activities.project_name;
   const file_name = activities.file_name;
 
   const function_name = activities.function_name;
   const creation_time = activities._creationTime;
+  const repo_name = activities.repo_name.replace(/https:\/\/github\.com\/[^/]+\//, "").replace(/\.git$/, "");
   const now = new Date().getTime();
 
-  // if the time difference is greater than 60 minutes
-  // set offline to true
-  let status: Status = 60 * 60 > now - creation_time ? "Online" : "Offline";
-  status = 60 * 60 < now - creation_time ? "Online" : "Offline";
+  // if the time difference is greater than 60 minutes, set offline
+  const status: Status = now - creation_time < 60 * 60 * 1000 ? "Online" : "Offline";
 
   let status_marker = undefined;
   let status_text = undefined;
@@ -65,9 +64,9 @@ export default function WhatsHeDoing({ noanim }: { noanim?: boolean }) {
           {"Currently working on"}
           <HoverCard>
             <HoverCardTrigger>
-              <ImportantText zoom={false} text={project_name} />
+              <ImportantText zoom={false} text={repo_name} />
             </HoverCardTrigger>
-            <Link href={activities.repo_name}>
+            <Link href={repo_name}>
               <HoverCardContent className="w-80">
                 <div className="flex justify-between gap-4">
                   <Avatar>
@@ -76,9 +75,9 @@ export default function WhatsHeDoing({ noanim }: { noanim?: boolean }) {
                   </Avatar>
                   <div className="space-y-1">
                     <h4 className="text-sm font-semibold">
-                      {"@" + project_name}
+                      {"@" + repo_name}
                     </h4>
-                    <p className="text-sm">{activities.readme}</p>
+                    <p className="text-sm">{activities.readme_preview}</p>
                     {/*<div className="text-muted-foreground text-xs">
                     Joined December 2021
                   </div>{" "}*/}
@@ -137,7 +136,7 @@ export default function WhatsHeDoing({ noanim }: { noanim?: boolean }) {
           })}
         >
           Click
-          <Link href="whatsHeDone">
+          <Link href="done">
             <ImportantText
               text="Here"
               animate_text={true}

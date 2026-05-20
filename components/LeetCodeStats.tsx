@@ -71,7 +71,7 @@ export default function LeetCodeStats() {
     const submission_count = submissionData[current_date] || 0;
 
     let color_class = "heatmap-cell-0";
-    if (submission_count > 3) {
+    if (submission_count > 0) {
       color_class = "heatmap-cell-4";
     }
 
