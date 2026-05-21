@@ -6,7 +6,6 @@ import LeetCodeStats from "@/components/LeetCodeStats";
 import ZedUsageStats from "@/components/ZedUsageStats";
 import GitHubStats from "@/components/GitHubStats";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
 
 type ProjectStatus = "done" | "coming-soon";
 

@@ -16,16 +16,6 @@ export function generateStaticParams() {
     .map((f) => ({ slug: f.replace(/\.md$/, "") }));
 }
 
-function formatDate(dateStr: string): string {
-  if (!dateStr) return "";
-  const d = new Date(dateStr + "T00:00:00");
-  return d.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
-
 const mdComponents: Components = {
   h1: ({ children }) => (
     <h1 className="text-3xl font-bold mt-10 mb-4">{children}</h1>
@@ -88,11 +78,6 @@ export default async function PostPage({
 
   const raw = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(raw);
-
-  const title = data.title ?? slug;
-  const date = data.date instanceof Date
-    ? data.date.toISOString().slice(0, 10)
-    : data.date ? String(data.date).slice(0, 10) : "";
 
   return (
     <main className="min-h-screen px-10 py-20 max-w-3xl mx-auto">

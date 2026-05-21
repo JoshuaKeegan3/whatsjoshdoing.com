@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import "./LeetCodeStats.css";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
@@ -21,7 +20,7 @@ export default function ZedUsageStats() {
 
   while (current_date == utc_date_seconds - 30 * SECONDS_IN_DAY) {
     let color_class = "heatmap-cell-0";
-    let days_to_go =
+    const days_to_go =
       (current_date -
         res[utc_date_seconds - current_date / SECONDS_IN_DAY].date) /
       SECONDS_IN_DAY;
