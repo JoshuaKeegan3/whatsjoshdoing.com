@@ -214,33 +214,14 @@ function WhatsHeDoneContent() {
       <div className="canvas-content" ref={canvasContentRef}>
         <div className="center-content">
           <h1 className="title">What&apos;s He Done</h1>
-          <span><p>Leetcode stats</p><p>Editor Usage <Popup>?</Popup></p></span>
-          <span>
-            <LeetCodeStats />
-            <ZedUsageStats/>
-          </span>
-        </div>
-        {buttons.map((button) => (
-          <Link
-            href={button.repoUrl}
-            key={button.id}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              src={button.imageUrl}
-              className="scroll-button"
-              style={{ top: button.top, left: button.left }}
-              alt={`Project ${button.id}`}
-              width={100}
-              height={100}
-            />
-          </a>
-        ))}
           <div className="stats-row">
             <div className="stat-block">
               <p className="stat-label">LeetCode</p>
               <LeetCodeStats />
+            </div>
+            <div className="stat-block">
+              <p className="stat-label">Editor Usage</p>
+              <ZedUsageStats />
             </div>
             <div className="stat-block">
               <p className="stat-label">GitHub</p>

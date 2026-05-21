@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Activity, Lightbulb, Briefcase } from "lucide-react";
+import { Activity, Lightbulb, Briefcase, BookOpen } from "lucide-react";
 import Link from "next/link";
 import Arrow from "@/components/Arrow";
 
@@ -12,7 +12,7 @@ export default function Home() {
   useEffect(() => {
     const timer = setInterval(() => {
       if (active) {
-        setRollerLocation((prev) => (prev + 1) % 3);
+        setRollerLocation((prev) => (prev + 1) % 4);
       }
 
       setActive((prev) => !prev);
@@ -67,11 +67,15 @@ export default function Home() {
               <br />
               Thinking
               <br />
+              Learning
+              <br />
               Done
               <br />
               Doing
               <br />
               Thinking
+              <br />
+              Learning
             </span>
           </div>
         </div>
@@ -101,6 +105,13 @@ export default function Home() {
           >
             <Link href={"doing?noanim=true"}>
               <Activity size={48} />
+            </Link>
+          </div>
+          <div
+            className={`p-4 rounded-lg flex justify-center items-center${rollerLocation === 3 ? " glowing-border text-white" : ""}`}
+          >
+            <Link href={"learning"}>
+              <BookOpen size={48} />
             </Link>
           </div>
         </div>

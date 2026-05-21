@@ -7,7 +7,7 @@ link {
     color: red;
 }
 .roller {
-    height: 12rem;
+    height: 16rem;
     line-height: 4rem;
     position: relative;
     overflow: hidden;
@@ -47,21 +47,24 @@ link {
     position: absolute;
     text-align: left;
     top: 0;
-    animation: slide 9s infinite;
+    animation: slide 12s infinite;
 }
 
 @keyframes slide {
     0% {
         top: 0rem;
     }
-    33% {
+    25% {
         top: -4rem;
     }
-    66% {
+    50% {
         top: -8rem;
     }
-    100% {
+    75% {
         top: -12rem;
+    }
+    100% {
+        top: -16rem;
     }
 }
 
