@@ -10,6 +10,14 @@ type Site = {
 
 const sites: Site[] = [
   {
+    title: "IRENA Global Atlas",
+    url: "https://globalatlas.irena.org/",
+    description:
+      "IRENA's interactive global map of renewable energy resources — solar, wind, hydro, and more. Useful for understanding where renewable potential exists worldwide.",
+    category: "Energy",
+    categoryColor: "text-yellow-400",
+  },
+  {
     title: "Open Grid Works — Power Plants",
     url: "https://opengridworks.com/power-plants",
     description:
