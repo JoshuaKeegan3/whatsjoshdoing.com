@@ -42,6 +42,14 @@ const sites: Site[] = [
     categoryColor: "text-green-400",
   },
   {
+    title: "Calitree",
+    url: "https://calitree.app/",
+    description:
+      "Interactive calisthenics skill tree. Visualises progressions and prerequisites across bodyweight movements — useful for planning a structured training path.",
+    category: "Fitness",
+    categoryColor: "text-orange-400",
+  },
+  {
     title: "Security Certification Roadmap",
     url: "https://pauljerimy.com/security-certification-roadmap/",
     description:
