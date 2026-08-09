@@ -10,6 +10,46 @@ type Site = {
 
 const sites: Site[] = [
   {
+    title: "Build Your Own X",
+    url: "https://github.com/codecrafters-io/build-your-own-x",
+    description:
+      "Collection of step-by-step tutorials for rebuilding the tools you use daily — databases, git, shells, compilers, operating systems, neural networks.",
+    category: "Programming",
+    categoryColor: "text-purple-400",
+  },
+  {
+    title: "Free for Dev",
+    url: "https://github.com/ripienaar/free-for-dev",
+    description:
+      "Curated list of SaaS, PaaS, and IaaS offerings with free tiers for developers — hosting, CI, monitoring, databases, and more.",
+    category: "Programming",
+    categoryColor: "text-purple-400",
+  },
+  {
+    title: "Developer Roadmap",
+    url: "https://github.com/nilbuild/developer-roadmap",
+    description:
+      "Visual roadmaps for learning paths across frontend, backend, DevOps, and related roles — what to learn and in what order.",
+    category: "Programming",
+    categoryColor: "text-purple-400",
+  },
+  {
+    title: "Best Websites a Programmer Should Visit",
+    url: "https://github.com/sdmg15/Best-websites-a-programmer-should-visit",
+    description:
+      "Long-running index of sites worth knowing about — practice platforms, CS courses, blogs, newsletters, tooling, and interview prep.",
+    category: "Programming",
+    categoryColor: "text-purple-400",
+  },
+  {
+    title: "Textbooks and Papers",
+    url: "https://github.com/GeorgeQLe/Textbooks-and-Papers/tree/master",
+    description:
+      "Reading list of computer science textbooks and foundational papers, sorted by subject — theory, systems, languages, and mathematics.",
+    category: "Programming",
+    categoryColor: "text-purple-400",
+  },
+  {
     title: "IRENA Global Atlas",
     url: "https://globalatlas.irena.org/",
     description:
