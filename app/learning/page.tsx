@@ -9,6 +9,13 @@ type Site = {
 };
 
 const sites: Site[] = [
+{
+		title: "The farmer was replaced"
+		url: "thefarmerwasreplaced.com/"
+		description: "A game that teaches you a python ajacent programmming language"
+    category: "Programming",
+    categoryColor: "text-purple-400",
+},
   {
     title: "Build Your Own X",
     url: "https://github.com/codecrafters-io/build-your-own-x",
