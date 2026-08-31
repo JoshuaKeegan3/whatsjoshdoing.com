@@ -23,10 +23,6 @@ export default function DoingPage() {
       <section className="border-t border-rule pt-10">
         <GitHubStats />
       </section>
-
-      <QuietBoundary>
-        <SessionLog />
-      </QuietBoundary>
     </div>
   );
 }

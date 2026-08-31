@@ -93,7 +93,7 @@ export default function LiveHero() {
 
       <p className="mt-6 max-w-md text-xs leading-relaxed text-trace">
         {online
-          ? "Open in Zed right now. This line comes from a fork of the editor that broadcasts the project it has focused."
+          ? "This updates in REAL TIME with what Josh is working on"
           : "The last project Josh had open. The readout is live whenever he is editing."}
       </p>
     </div>
