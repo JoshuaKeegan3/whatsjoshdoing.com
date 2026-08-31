@@ -69,16 +69,14 @@ export default function Home() {
 
         <div className="prose-body mt-8 space-y-5">
           <p>
-            I resonated with the term fox while listening to a{" "}
+            The term was mentioned during a{" "}
             <a
               className="underline decoration-rule underline-offset-4 transition-colors hover:text-live hover:decoration-live"
               href="https://youtu.be/HUkBz-cdB-k?t=3258"
             >
               conversation
             </a>{" "}
-            between Terence &quot;The Mozart of Math&quot; Tao (widely considered to be one of
-            the greatest mathematicians in history and smartest people alive) and MIT
-            Artificial Intelligence lecturer{" "}
+            between Terence Tao and{" "}
             <a
               className="underline decoration-rule underline-offset-4 transition-colors hover:text-live hover:decoration-live"
               href="https://lexfridman.com/"
