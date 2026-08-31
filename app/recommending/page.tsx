@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { sites, type Site } from "@/lib/learning";
+import { sites, type Site } from "@/lib/recommending";
 
 export const metadata: Metadata = {
-  title: "Learning · Josh Keegan",
+  title: "Recommending · Josh Keegan",
   description: "Sites worth bookmarking, grouped by subject.",
 };
 
@@ -20,16 +20,16 @@ function groupByCategory(items: Site[]) {
 
 const domainOf = (url: string) => new URL(url).hostname.replace(/^www\./, "");
 
-export default function LearningPage() {
+export default function RecommendingPage() {
   const groups = groupByCategory(sites);
 
   return (
     <div className="mx-auto max-w-3xl px-5 pb-32 pt-16 md:px-12 md:pt-24">
       <h1 className="rise text-[clamp(1.75rem,5vw,2.75rem)] leading-none tracking-tight">
-        Learning
+        Recommending
       </h1>
       <p className="prose-body mt-4 text-trace">
-        Things Josh has not finished learning yet.
+        Things Josh thinks are worth your time.
       </p>
 
       {groups.map(([category, items]) => (

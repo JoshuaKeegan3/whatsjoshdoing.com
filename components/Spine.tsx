@@ -6,8 +6,8 @@ import { usePathname } from "next/navigation";
 /**
  * The site's index rail: one vertical hairline with a tick per section,
  * present on every page. Sections are ordered by tense rather than by
- * importance, which is the one true thing about them: learning is what
- * Josh has not done yet, doing is now, the rest is record.
+ * importance, which is the one true thing about them: doing is now, the
+ * rest is record, and recommending points ahead.
  *
  * Under `md` it collapses to a horizontal bar so the rail never eats
  * width on a phone.
@@ -16,7 +16,7 @@ const SECTIONS = [
   { href: "/doing", label: "Doing", tense: "now" },
   { href: "/done", label: "Done", tense: "past" },
   { href: "/thinking", label: "Thinking", tense: "past" },
-  { href: "/learning", label: "Learning", tense: "ahead" },
+  { href: "/recommending", label: "Recommending", tense: "ahead" },
 ] as const;
 
 export default function Spine() {

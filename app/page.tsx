@@ -3,13 +3,13 @@ import LiveHero from "@/components/LiveHero";
 import QuietBoundary from "@/components/QuietBoundary";
 import { getResume } from "@/lib/resume";
 import { getPosts } from "@/lib/posts";
-import { sites } from "@/lib/learning";
+import { sites } from "@/lib/recommending";
 
 /**
  * The four sections ordered by tense rather than by importance. That order
- * is the one true thing about them: learning is what Josh has not done yet,
- * doing is now, and the rest is record. Counts come from the real sources,
- * so the index cannot drift from what it points at.
+ * is the one true thing about them: doing is now, the rest is record, and
+ * recommending points ahead at what is worth your time. Counts come from
+ * the real sources, so the index cannot drift from what it points at.
  */
 function buildIndex() {
   const resume = getResume();
@@ -25,7 +25,7 @@ function buildIndex() {
     { href: "/doing", tense: "now", label: "Doing", count: "live file readout" },
     { href: "/done", tense: "past", label: "Done", count: `${roles} roles, ${projects} projects` },
     { href: "/thinking", tense: "past", label: "Thinking", count: `${essays} essays` },
-    { href: "/learning", tense: "ahead", label: "Learning", count: `${sites.length} bookmarks` },
+    { href: "/recommending", tense: "ahead", label: "Recommending", count: `${sites.length} bookmarks` },
   ];
 }
 
