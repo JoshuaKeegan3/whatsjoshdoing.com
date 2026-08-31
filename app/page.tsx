@@ -64,22 +64,10 @@ export default function Home() {
 
       <section className="pt-24">
         <h2 className="text-[clamp(1.5rem,4vw,2.25rem)] leading-tight tracking-tight">
-          Josh Keegan is a builder and a fox
+          Josh Keegan is a Fox
         </h2>
 
         <div className="prose-body mt-8 space-y-5">
-          <p>
-            AI has raised the skill floor, but it has also raised the ceiling. Anyone can
-            write code now. What they can&apos;t do is build. The engineers who were always
-            exceptional knew their tools deeply, understood how components fit together, and
-            cared about the quality of what they shipped. They thought in systems. They
-            suggested direction, made architectural decisions, and stayed curious. That
-            thinking transfers, to data, to electronics, to the cloud.
-          </p>
-          <p>
-            AI moved the bottleneck from the fingers to the mind. The things that once made
-            great engineers special now make them extraordinary.
-          </p>
           <p>
             I resonated with the term fox while listening to a{" "}
             <a
@@ -106,26 +94,17 @@ export default function Home() {
           </blockquote>
 
           <p>
-            We need foxes as a driving force for progress and innovation. We used to do
-            geometry with{" "}
+             We used to do geometry with{" "}
             <a
               className="underline decoration-rule underline-offset-4 transition-colors hover:text-live hover:decoration-live"
               href="https://www.youtube.com/watch?v=M-MgQC6z3VU"
             >
               Euclid&apos;s ruler and compass
             </a>
-            . Descartes connected geometry and number theory, allowing the more intuitive way
-            of thinking about geometry that we teach today. While this is an ancient example,
-            Tao also gives a personal anecdote of how he took the famous Game of Life and
-            applied it to the famously complex Navier Stokes equations in order to disprove a
-            turbulent singularity.
+            untill Descartes connected geometry and number theory, permenantly entangling them.
           </p>
           <p>
-            Software makes logic tangible, directly converting thought into thing. The first
-            time I created something it was a game of Connect Four, and the feeling of my
-            thought becoming reality was electric. I chose a career in tech because of this
-            feeling. Because if someone has a problem, all I need do is think of the solution
-            and it is theirs. This doesn&apos;t exist outside of tech.
+            Software makes thoughts tangible and energy will define the future. Combining the two allows my thoughts to define the future.
           </p>
         </div>
       </section>
