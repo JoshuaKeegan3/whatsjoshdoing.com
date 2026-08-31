@@ -1,21 +1,26 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Martian_Mono, Newsreader } from "next/font/google";
 import "./globals.css";
 import { ConvexClientProvider } from "./ConvexClientProvider";
+import Spine from "@/components/Spine";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+/** Machine voice: the hero readout, identifiers, timestamps, data. */
+const martian = Martian_Mono({
+  variable: "--font-martian",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+/** Human voice: essays and anything Josh wrote in sentences. */
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
   subsets: ["latin"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
-  title: "whatsjoshdoing.com",
-  description: "Portfolio Website for Josh Keegan",
+  title: "What's Josh doing",
+  description:
+    "A live readout of what Josh Keegan is working on, plus the record of what he has finished.",
 };
 
 export default function RootLayout({
@@ -24,11 +29,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ConvexClientProvider>{children}</ConvexClientProvider>
+    // The font variables must sit on :root, not on body: `@theme` resolves
+    // --font-mono against :root, and a var defined lower down cannot satisfy it.
+    <html lang="en" className={`${martian.variable} ${newsreader.variable}`}>
+      <body>
+        <ConvexClientProvider>
+          <Spine />
+          <main className="md:pl-spine print-plain">{children}</main>
+        </ConvexClientProvider>
       </body>
     </html>
   );

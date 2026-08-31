@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
@@ -5,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Components } from "react-markdown";
+import { formatDate } from "@/lib/posts";
 
 const postsDir = path.join(process.cwd(), "thinking");
 
@@ -16,55 +18,58 @@ export function generateStaticParams() {
     .map((f) => ({ slug: f.replace(/\.md$/, "") }));
 }
 
+const linkClass =
+  "underline decoration-rule underline-offset-4 transition-colors hover:text-live hover:decoration-live";
+
+/** Prose is the serif voice. Headings and code stay mono: those are structure. */
 const mdComponents: Components = {
   h1: ({ children }) => (
-    <h1 className="text-3xl font-bold mt-10 mb-4">{children}</h1>
+    <h1 className="mb-4 mt-12 font-mono text-xl tracking-tight">{children}</h1>
   ),
   h2: ({ children }) => (
-    <h2 className="text-2xl font-semibold mt-8 mb-3">{children}</h2>
+    <h2 className="mb-3 mt-10 font-mono text-base tracking-tight">{children}</h2>
   ),
-  h3: ({ children }) => (
-    <h3 className="text-xl font-semibold mt-6 mb-2">{children}</h3>
-  ),
-  p: ({ children }) => (
-    <p className="text-base leading-7 mb-4 text-foreground/90">{children}</p>
-  ),
+  h3: ({ children }) => <h3 className="mb-2 mt-8 label">{children}</h3>,
+  p: ({ children }) => <p className="mb-5">{children}</p>,
   a: ({ href, children }) => (
-    <a href={href} className="text-red-500 hover:underline" target="_blank" rel="noopener noreferrer">
+    <a href={href} className={linkClass} target="_blank" rel="noopener noreferrer">
       {children}
     </a>
   ),
-  ul: ({ children }) => (
-    <ul className="list-disc list-inside mb-4 space-y-1 text-foreground/90">{children}</ul>
-  ),
-  ol: ({ children }) => (
-    <ol className="list-decimal list-inside mb-4 space-y-1 text-foreground/90">{children}</ol>
-  ),
+  ul: ({ children }) => <ul className="mb-5 list-disc space-y-1 pl-5">{children}</ul>,
+  ol: ({ children }) => <ol className="mb-5 list-decimal space-y-1 pl-5">{children}</ol>,
   blockquote: ({ children }) => (
-    <blockquote className="border-l-2 border-red-500 pl-4 italic text-muted-foreground my-4">
+    <blockquote className="my-6 border-l border-rule py-1 pl-6 italic text-trace">
       {children}
     </blockquote>
   ),
-  code: ({ children, className }) => {
-    const isBlock = className?.includes("language-");
-    return isBlock ? (
-      <code
-        className="block bg-muted rounded-lg p-4 text-sm overflow-x-auto mb-4"
-        style={{ fontFamily: "var(--font-geist-mono)" }}
-      >
+  code: ({ children, className }) =>
+    className?.includes("language-") ? (
+      <code className="mb-5 block overflow-x-auto border border-rule p-4 font-mono text-xs leading-relaxed">
         {children}
       </code>
     ) : (
-      <code
-        className="bg-muted rounded px-1.5 py-0.5 text-sm"
-        style={{ fontFamily: "var(--font-geist-mono)" }}
-      >
-        {children}
-      </code>
-    );
-  },
-  hr: () => <hr className="border-t border-border my-8" />,
+      <code className="font-mono text-[0.8em]">{children}</code>
+    ),
+  hr: () => <hr className="my-10 border-t border-rule" />,
 };
+
+/** Reads frontmatter so a shared post link carries its own title. */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const filePath = path.join(postsDir, `${slug}.md`);
+  if (!fs.existsSync(filePath)) return {};
+
+  const { data } = matter(fs.readFileSync(filePath, "utf-8"));
+  return {
+    title: `${data.title ?? slug} · Josh Keegan`,
+    description: data.description ?? undefined,
+  };
+}
 
 export default async function PostPage({
   params,
@@ -76,22 +81,36 @@ export default async function PostPage({
 
   if (!fs.existsSync(filePath)) notFound();
 
-  const raw = fs.readFileSync(filePath, "utf-8");
-  const { data, content } = matter(raw);
+  const { data, content } = matter(fs.readFileSync(filePath, "utf-8"));
+  const date =
+    data.date instanceof Date
+      ? data.date.toISOString().slice(0, 10)
+      : data.date
+        ? String(data.date).slice(0, 10)
+        : "";
 
   return (
-    <main className="min-h-screen px-10 py-20 max-w-3xl mx-auto">
-      <Link
-        href="/thinking"
-        className="text-sm text-muted-foreground hover:text-red-500 transition-colors mb-12 inline-block"
-        style={{ fontFamily: "var(--font-geist-mono)" }}
-      >
-        ← What&apos;s He Thinking
+    <div className="mx-auto max-w-3xl px-5 pb-32 pt-16 md:px-12 md:pt-24">
+      <Link href="/thinking" className="label transition-colors hover:text-signal">
+        ← Thinking
       </Link>
 
-      <article>
-        <ReactMarkdown components={mdComponents}>{content}</ReactMarkdown>
+      <article className="mt-12">
+        <header className="border-b border-rule pb-8">
+          <h1 className="text-[clamp(1.5rem,4vw,2.25rem)] leading-tight tracking-tight">
+            {data.title ?? slug}
+          </h1>
+          {date && (
+            <time className="mt-3 block text-xs text-trace" dateTime={date}>
+              {formatDate(date)}
+            </time>
+          )}
+        </header>
+
+        <div className="prose-body mt-10">
+          <ReactMarkdown components={mdComponents}>{content}</ReactMarkdown>
+        </div>
       </article>
-    </main>
+    </div>
   );
 }

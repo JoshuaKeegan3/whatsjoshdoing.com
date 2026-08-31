@@ -29,22 +29,12 @@ export default function GitHubStats() {
     const fetchData = async () => {
       const events = await fetchGitHubEvents();
       const now = new Date();
-      console.log("Browser datetime:", now.toString());
 
       const todayYear = now.getFullYear();
       const todayMonth = now.getMonth();
       const todayDate = now.getDate();
 
       const pushEvents = events.filter((e) => e.type === "PushEvent");
-      console.log(
-        "Fetched PushEvent datetimes:",
-        pushEvents.map((e) => ({
-          raw: e.created_at,
-          local: new Date(e.created_at).toString(),
-          size: e.payload.size,
-          commits: e.payload.commits?.length,
-        })),
-      );
 
       const count = pushEvents
         .filter((e) => {
@@ -56,7 +46,6 @@ export default function GitHubStats() {
           );
         }).length;
 
-      console.log(count);
       setCommitsToday(count);
     };
 
@@ -64,11 +53,11 @@ export default function GitHubStats() {
   }, []);
 
   return (
-    <div className="kpi">
-      <span className="kpi-value">
-        {commitsToday === null ? "—" : commitsToday}
-      </span>
-      <span className="kpi-sublabel">commits today</span>
+    <div>
+      <p className="text-[clamp(1.5rem,4vw,2.25rem)] leading-none tabular-nums">
+        {commitsToday ?? "\u2013"}
+      </p>
+      <p className="label mt-2">Commits today</p>
     </div>
   );
 }

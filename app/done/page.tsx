@@ -1,278 +1,220 @@
-"use client";
+import type { Metadata } from "next";
+import { getResume, type Entry, type Section } from "@/lib/resume";
+import { repos, shipped } from "@/resume/links";
 
-import { useEffect, useRef, useState, Suspense } from "react";
-import "./whatsHeDone.css";
-import LeetCodeStats from "@/components/LeetCodeStats";
-import ZedUsageStats from "@/components/ZedUsageStats";
-import GitHubStats from "@/components/GitHubStats";
-import { useSearchParams } from "next/navigation";
-
-type ProjectStatus = "done" | "coming-soon";
-
-type Project = {
-  name: string;
-  description: string;
-  status: ProjectStatus;
-  url: string | null;
+export const metadata: Metadata = {
+  title: "Done · Josh Keegan",
+  description: "The record: roles, study, and shipped work.",
 };
 
-const projects: Project[] = [
-  // Production
-  {
-    name: "zed-convex",
-    description: "Zed editor fork that broadcasts your current file and function in real-time",
-    status: "done",
-    url: "https://github.com/JoshuaKeegan3/zed-convex",
-  },
-  {
-    name: "Accountability",
-    description: "Daily accountability app to track what you do each day",
-    status: "done",
-    url: "https://github.com/JoshuaKeegan3/accountability",
-  },
-  {
-    name: "linux-meetingbar",
-    description: "MacOS MeetingBar clone built for Linux and Waybar",
-    status: "done",
-    url: null,
-  },
-  {
-    name: "todo",
-    description: "TUI for browsing TODO comments in your codebase using ripgrep and Bubbletea",
-    status: "done",
-    url: "https://github.com/JoshuaKeegan3/todo",
-  },
-  {
-    name: "Electron",
-    description: "Physics and waves simulation",
-    status: "done",
-    url: "https://www.huntresearchgroup.org.uk/teaching/year2_203_waves2.html",
-  },
-  // Coming soon
-  {
-    name: "you-are-what-you-eat",
-    description: "Nutrition tracking app inspired by the twin experiment — know what you're actually eating",
-    status: "coming-soon",
-    url: null,
-  },
-  {
-    name: "Hangar Climbing",
-    description: "Interactive gym map and global climbing social network",
-    status: "coming-soon",
-    url: null,
-  },
-  {
-    name: "Extensible Chat for AI",
-    description: "Secure encrypted messaging built for the era of personal AI — WhatsApp meets VS Code",
-    status: "coming-soon",
-    url: null,
-  },
-  {
-    name: "Deals & Events",
-    description: "Wellington deals and events aggregator",
-    status: "coming-soon",
-    url: null,
-  },
-  {
-    name: "Contractor Manager",
-    description: "Mobile app for managing contractors and their assigned tasks",
-    status: "coming-soon",
-    url: null,
-  },
-  {
-    name: "Learning Website",
-    description: "Renewable energy master's course resource with live simulations",
-    status: "coming-soon",
-    url: null,
-  },
-  {
-    name: "Turing Test",
-    description: "AI agent designed to convincingly pass a Turing test",
-    status: "coming-soon",
-    url: null,
-  },
-];
+/** Section heading. The rail below it is this page's time axis. */
+function Heading({ children }: { children: string }) {
+  return <h2 className="label mb-4 pt-14">{children}</h2>;
+}
 
-type ProjectCard = {
-  id: number;
-  project: Project;
-  top: string;
-  left: string;
-};
-
-const generateCards = (projects: Project[]): ProjectCard[] => {
-  const rings = [
-    { count: 6, radiusPx: 340 },
-    { count: 8, radiusPx: 560 },
-  ];
-
-  const cards: ProjectCard[] = [];
-  let projectIndex = 0;
-
-  rings.forEach((ring) => {
-    const angleIncrement = (2 * Math.PI) / ring.count;
-    for (let i = 0; i < ring.count; i++) {
-      if (projectIndex >= projects.length) break;
-      const angle = i * angleIncrement;
-      cards.push({
-        id: projectIndex,
-        project: projects[projectIndex],
-        top: `calc(50% + ${Math.round(ring.radiusPx * Math.sin(angle))}px)`,
-        left: `calc(50% + ${Math.round(ring.radiusPx * Math.cos(angle))}px)`,
-      });
-      projectIndex++;
-    }
-  });
-
-  return cards;
-};
-
-const cards = generateCards(projects);
-
-function WhatsHeDoneContent() {
-  const canvasRef = useRef<HTMLDivElement>(null);
-  const canvasContentRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [startY, setStartY] = useState(0);
-  const [scrollLeftStart, setScrollLeftStart] = useState(0);
-  const [scrollTopStart, setScrollTopStart] = useState(0);
-  const searchParams = useSearchParams();
-  const noanim = searchParams.get("noanim") === "true";
-
-  useEffect(() => {
-    if (canvasRef.current && canvasContentRef.current) {
-      const canvas = canvasRef.current;
-      const canvasContent = canvasContentRef.current;
-      canvas.scrollTop = (canvasContent.clientHeight - canvas.clientHeight) / 2;
-      canvas.scrollLeft = (canvasContent.clientWidth - canvas.clientWidth) / 2;
-    }
-
-    const cardElements = document.querySelectorAll(".scroll-button");
-    if (noanim) {
-      cardElements.forEach((el) => el.classList.add("no-anim-visible"));
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          } else {
-            entry.target.classList.remove("visible");
-          }
-        });
-      },
-      { threshold: 0.01, root: canvasRef.current },
-    );
-
-    cardElements.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, [noanim]);
-
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!canvasRef.current) return;
-    setIsDragging(true);
-    setStartX(e.pageX - canvasRef.current.offsetLeft);
-    setStartY(e.pageY - canvasRef.current.offsetTop);
-    setScrollLeftStart(canvasRef.current.scrollLeft);
-    setScrollTopStart(canvasRef.current.scrollTop);
-    canvasRef.current.classList.add("grabbing");
-  };
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging || !canvasRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - canvasRef.current.offsetLeft;
-    const y = e.pageY - canvasRef.current.offsetTop;
-    canvasRef.current.scrollLeft = scrollLeftStart - (x - startX);
-    canvasRef.current.scrollTop = scrollTopStart - (y - startY);
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-    canvasRef.current?.classList.remove("grabbing");
-  };
-
-  const handleMouseLeave = () => {
-    setIsDragging(false);
-    canvasRef.current?.classList.remove("grabbing");
-  };
+/**
+ * Year ticks sit at the top edge of each entry rather than scaled to
+ * duration: proportional spacing opens dead gaps and misrepresents a
+ * three-bullet year against a five-bullet one.
+ */
+function EntryRow({ entry, showYear }: { entry: Entry; showYear: boolean }) {
+  const url = repos[entry.title];
+  const heading = (
+    <h3 className="text-[0.9375rem] leading-snug text-signal">{entry.title}</h3>
+  );
 
   return (
-    <div
-      className="canvas"
-      ref={canvasRef}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseLeave}
+    <article
+      className={
+        showYear
+          ? "entry-row row grid grid-cols-[3.25rem_1fr] gap-x-5 py-5 md:grid-cols-[4.5rem_1fr] md:gap-x-8"
+          : "row py-5"
+      }
     >
-      <div className="canvas-content" ref={canvasContentRef}>
-        <div className="center-content">
-          <h1 className="title">What&apos;s He Done</h1>
-          <div className="stats-row">
-            <div className="stat-block">
-              <p className="stat-label">LeetCode</p>
-              <LeetCodeStats />
-            </div>
-            <div className="stat-block">
-              <p className="stat-label">Editor Usage</p>
-              <ZedUsageStats />
-            </div>
-            <div className="stat-block">
-              <p className="stat-label">GitHub</p>
-              <GitHubStats />
-            </div>
-          </div>
+      {showYear && <div className="text-xs text-trace">{entry.year ?? ""}</div>}
+
+      <div>
+        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+          {url ? (
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="print-url hover:text-live"
+            >
+              {heading}
+            </a>
+          ) : (
+            heading
+          )}
+          {entry.org && <span className="text-xs text-trace">{entry.org}</span>}
         </div>
 
-        {cards.map((card) => {
-          const cardEl = (
-            <div
-              className={`scroll-button project-card${card.project.status === "coming-soon" ? " coming-soon-card" : ""}`}
-              style={{ top: card.top, left: card.left }}
-            >
-              <span
-                className={`project-badge ${card.project.status === "coming-soon" ? "badge-soon" : "badge-done"}`}
-              >
-                {card.project.status === "coming-soon" ? "Coming Soon" : "Done"}
-              </span>
-              <h3 className="project-name">{card.project.name}</h3>
-              <p className="project-desc">{card.project.description}</p>
-              {card.project.status === "coming-soon" && (
-                <div className="coming-soon-overlay" />
-              )}
-            </div>
-          );
+        {entry.period && (
+          <p className="mt-1 text-xs text-trace">
+            {entry.period}
+            {entry.current && <span className="text-live"> · current</span>}
+          </p>
+        )}
 
-          if (card.project.url) {
-            return (
-              <a
-                key={card.id}
-                href={card.project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ display: "contents" }}
-              >
-                {cardEl}
-              </a>
-            );
-          }
-
-          return <div key={card.id} style={{ display: "contents" }}>{cardEl}</div>;
-        })}
+        {entry.body.length > 0 && (
+          <div className="prose-body mt-3 space-y-1">
+            {entry.body.map((block, i) =>
+              block.kind === "label" ? (
+                <p key={i} className="label pt-2 font-mono">
+                  {block.text}
+                </p>
+              ) : block.kind === "bullet" ? (
+                <p key={i} className="flex gap-3">
+                  <span className="bullet-dot mt-[0.7em] size-1 shrink-0 bg-trace" aria-hidden />
+                  <span>{block.text}</span>
+                </p>
+              ) : (
+                <p key={i}>{block.text}</p>
+              ),
+            )}
+          </div>
+        )}
       </div>
-    </div>
+    </article>
   );
 }
 
-export default function WhatsHeDone() {
+function RenderSection({ section }: { section: Section }) {
+  switch (section.kind) {
+    case "prose":
+      return (
+        <section>
+          <Heading>{section.heading}</Heading>
+          <p className="prose-body">{section.text}</p>
+        </section>
+      );
+
+    case "entries": {
+      // Undated sections (Projects) drop the rail rather than leaving a gutter.
+      const showYear = section.entries.some((entry) => entry.year !== null);
+      return (
+        <section>
+          <Heading>{section.heading}</Heading>
+          {section.entries.map((entry) => (
+            <EntryRow
+              key={`${entry.title}-${entry.org ?? ""}`}
+              entry={entry}
+              showYear={showYear}
+            />
+          ))}
+        </section>
+      );
+    }
+
+    case "list":
+      return (
+        <section>
+          <Heading>{section.heading}</Heading>
+          {section.items.map((item) => (
+            <div
+              key={item.text}
+              className="row flex items-baseline justify-between gap-6 py-2.5 text-[0.8125rem]"
+            >
+              <span>{item.text}</span>
+              {item.meta && <span className="shrink-0 text-xs text-trace">{item.meta}</span>}
+            </div>
+          ))}
+        </section>
+      );
+
+    case "skills":
+      return (
+        <section>
+          <Heading>{section.heading}</Heading>
+          {section.groups.map((group) => (
+            <div
+              key={group.category}
+              className="skills-row row grid grid-cols-1 gap-x-8 gap-y-1 py-3 md:grid-cols-[9rem_1fr]"
+            >
+              <p className="label pt-0.5">{group.category}</p>
+              <p className="text-[0.8125rem] leading-relaxed">{group.items.join(", ")}</p>
+            </div>
+          ))}
+        </section>
+      );
+  }
+}
+
+export default function DonePage() {
+  const resume = getResume();
+  const { contact } = resume;
+
+  const links = [
+    contact.email ? { label: contact.email, href: `mailto:${contact.email}` } : null,
+    contact.github
+      ? {
+          label: `github.com/${contact.github}`,
+          href: `https://github.com/${contact.github}`,
+        }
+      : null,
+    contact.linkedin
+      ? {
+          label: `linkedin.com/${contact.linkedin}`,
+          href: `https://linkedin.com/${contact.linkedin}`,
+        }
+      : null,
+  ].filter((link) => link !== null);
+
   return (
-    <Suspense>
-      <WhatsHeDoneContent />
-    </Suspense>
+    <div className="mx-auto max-w-3xl px-5 pb-32 pt-16 md:px-12 md:pt-24">
+      <header className="rise">
+        <h1 className="text-[clamp(1.75rem,5vw,2.75rem)] leading-none tracking-tight">
+          {resume.name}
+        </h1>
+        <p className="mt-3 text-sm text-trace">
+          {resume.title}
+          {contact.location && ` · ${contact.location}`}
+        </p>
+        <div className="contact-row mt-4 flex flex-wrap gap-x-5 gap-y-1 text-xs text-trace">
+          {links.map((link) => (
+            <a key={link.href} href={link.href} className="hover:text-live">
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </header>
+
+      {resume.sections.map((section) => (
+        <div key={section.heading}>
+          <RenderSection section={section} />
+
+          {/* Repo-only work, kept next to the CV's own project list. */}
+          {section.heading === "Projects" && (
+            <section>
+              <Heading>Shipped</Heading>
+              {shipped.map((project) => {
+                const inner = (
+                  <>
+                    <h3 className="text-[0.9375rem] text-signal">{project.name}</h3>
+                    <p className="prose-body mt-1">{project.description}</p>
+                  </>
+                );
+                return project.url ? (
+                  <a
+                    key={project.name}
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="print-url row block py-5 hover:[&_h3]:text-live"
+                  >
+                    {inner}
+                  </a>
+                ) : (
+                  <div key={project.name} className="row py-5">
+                    {inner}
+                  </div>
+                );
+              })}
+            </section>
+          )}
+        </div>
+      ))}
+    </div>
   );
 }
