@@ -5,8 +5,6 @@ import ImportantText from "@/components/ImportantText";
 import { api } from "../convex/_generated/api";
 import Link from "next/link";
 import z from "zod";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import clsx from "clsx";
 
 type Status = "Offline" | "Online";
@@ -20,35 +18,34 @@ const INACTIVE_OPTIONS = [
   "Masters of Engergy Study"
 ];
 
+/** Shape of a row in the `t3PresenceEvents` table. */
 const schema = z.object({
-  file_name: z.string(),
-  class_name: z.string(),
-  function_name: z.string(),
-  repo_name: z.string(),
-  readme_preview: z.string(),
-  _creationTime: z.number(),
+  projectName: z.string(),
+  machineId: z.string(),
+  // Anything the editor sends that we don't recognise is treated as offline.
+  status: z.enum(["online", "offline"]).catch("offline"),
+  occurredAt: z.string(),
 });
 
 export default function WhatsHeDoing({ noanim }: { noanim?: boolean }) {
-  const res = useQuery(api.activity.get);
-  if (res == undefined) {
-    return;
+  const res = useQuery(api.presence.latest);
+  if (res === undefined) {
+    return null;
   }
 
-  const activities = schema.parse(res[0]);
-  const file_name = activities.file_name;
-
-  const function_name = activities.function_name;
-  const creation_time = activities._creationTime;
-  const repo_name = activities.repo_name.replace(/https:\/\/github\.com\/[^/]+\//, "").replace(/\.git$/, "");
+  const presence = res === null ? null : schema.parse(res);
+  const occurred_at = presence ? new Date(presence.occurredAt).getTime() : 0;
   const now = new Date().getTime();
 
-  // if the time difference is greater than 60 minutes, set offline
-  const status: Status = now - creation_time < 60 * 60 * 1000 ? "Online" : "Offline";
+  // A heartbeat older than 60 minutes counts as offline regardless of status.
+  const status: Status =
+    presence?.status === "online" && now - occurred_at < 60 * 60 * 1000
+      ? "Online"
+      : "Offline";
 
   let status_marker = undefined;
   let status_text = undefined;
-  if (status == "Online") {
+  if (status == "Online" && presence) {
     status_marker = (
       <div className="text-3xl flex flex-row p-4 rounded-lg">
         <span className="relative flex size-3">
@@ -62,37 +59,12 @@ export default function WhatsHeDoing({ noanim }: { noanim?: boolean }) {
       <div className="flex flex-col">
         <div className="justify-center flex flex-row">
           {"Currently working on"}
-          <HoverCard>
-            <HoverCardTrigger>
-              <ImportantText zoom={false} text={repo_name} />
-            </HoverCardTrigger>
-            <Link href={repo_name}>
-              <HoverCardContent className="w-80">
-                <div className="flex justify-between gap-4">
-                  <Avatar>
-                    <AvatarImage src="https://cdn.brandfetch.io/idd89H35Hf/w/400/h/400/theme/dark/icon.jpeg?c=1dxbfHSJFAPEGdCLU4o5B" />
-                    <AvatarFallback>VC</AvatarFallback>
-                  </Avatar>
-                  <div className="space-y-1">
-                    <h4 className="text-sm font-semibold">
-                      {"@" + repo_name}
-                    </h4>
-                    <p className="text-sm">{activities.readme_preview}</p>
-                    {/*<div className="text-muted-foreground text-xs">
-                    Joined December 2021
-                  </div>{" "}*/}
-                  </div>
-                </div>
-              </HoverCardContent>
-            </Link>
-          </HoverCard>
+          <ImportantText zoom={false} text={presence.projectName} />
         </div>
 
         <div className="justify-center flex flex-row">
-          {"Modifying"}
-          <ImportantText zoom={false} text={function_name} />
-          {"in"}
-          <ImportantText zoom={false} text={file_name} />
+          {"from"}
+          <ImportantText zoom={false} text={presence.machineId} />
         </div>
       </div>
     );

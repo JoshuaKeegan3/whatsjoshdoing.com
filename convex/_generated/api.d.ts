@@ -14,6 +14,7 @@ import type {
   FunctionReference,
 } from "convex/server";
 import type * as activity from "../activity.js";
+import type * as presence from "../presence.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -25,6 +26,7 @@ import type * as activity from "../activity.js";
  */
 declare const fullApi: ApiFromModules<{
   activity: typeof activity;
+  presence: typeof presence;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,
