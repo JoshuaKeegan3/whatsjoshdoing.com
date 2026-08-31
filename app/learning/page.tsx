@@ -10,9 +10,9 @@ type Site = {
 
 const sites: Site[] = [
 {
-		title: "The farmer was replaced"
-		url: "thefarmerwasreplaced.com/"
-		description: "A game that teaches you a python ajacent programmming language"
+		title: "The farmer was replaced",
+		url: "thefarmerwasreplaced.com/",
+		description: "A game that teaches you a python ajacent programmming language",
     category: "Programming",
     categoryColor: "text-purple-400",
 },
