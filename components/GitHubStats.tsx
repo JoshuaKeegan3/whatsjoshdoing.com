@@ -1,63 +1,46 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import z from "zod";
 
-type GitHubEvent = {
-  type: string;
-  created_at: string;
-  payload: {
-    size?: number;
-    commits?: Array<{ sha: string }>;
-  };
-};
+const schema = z.object({
+  /** null means the count could not be read, which is never shown as a number. */
+  count: z.number().nullable(),
+  date: z.string(),
+});
 
-async function fetchGitHubEvents(): Promise<GitHubEvent[]> {
+async function fetchContributions(): Promise<number | null> {
   try {
-    const response = await fetch("/api/github-events");
-    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-    return await response.json();
-  } catch (error) {
-    console.error("Failed to fetch GitHub activity:", error);
-    return [];
+    const response = await fetch("/api/github-contributions");
+    if (!response.ok) return null;
+    return schema.parse(await response.json()).count;
+  } catch {
+    return null;
   }
 }
 
+/** Today's GitHub contributions, the same figure as the profile graph. */
 export default function GitHubStats() {
-  const [commitsToday, setCommitsToday] = useState<number | null>(null);
+  const [count, setCount] = useState<number | null | undefined>(undefined);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const events = await fetchGitHubEvents();
-      const now = new Date();
-
-      const todayYear = now.getFullYear();
-      const todayMonth = now.getMonth();
-      const todayDate = now.getDate();
-
-      const pushEvents = events.filter((e) => e.type === "PushEvent");
-
-      const count = pushEvents
-        .filter((e) => {
-          const d = new Date(e.created_at);
-          return (
-            d.getFullYear() === todayYear &&
-            d.getMonth() === todayMonth &&
-            d.getDate() === todayDate
-          );
-        }).length;
-
-      setCommitsToday(count);
-    };
-
-    fetchData();
+    fetchContributions().then(setCount);
   }, []);
+
+  if (count === undefined) return <div className="h-16" aria-hidden />;
 
   return (
     <div>
-      <p className="text-[clamp(1.5rem,4vw,2.25rem)] leading-none tabular-nums">
-        {commitsToday ?? "\u2013"}
+      <p
+        className={`text-[clamp(1.5rem,4vw,2.25rem)] leading-none tabular-nums ${
+          count === null ? "text-trace" : ""
+        }`}
+      >
+        {count ?? "–"}
       </p>
-      <p className="label mt-2">Commits today</p>
+      <p className="label mt-2">
+        {count === null ? "GitHub unreachable" : "Contributions today"}
+      </p>
     </div>
   );
 }
