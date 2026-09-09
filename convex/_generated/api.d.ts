@@ -15,7 +15,7 @@ import type {
 } from "convex/server";
 import type * as activity from "../activity.js";
 import type * as http from "../http.js";
-import type * as presence from "../presence.js";
+import type * as project from "../project.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -28,7 +28,7 @@ import type * as presence from "../presence.js";
 declare const fullApi: ApiFromModules<{
   activity: typeof activity;
   http: typeof http;
-  presence: typeof presence;
+  project: typeof project;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,

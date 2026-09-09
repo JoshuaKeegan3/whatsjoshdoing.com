@@ -10,9 +10,12 @@ const schema = z.array(
     projectName: z.string(),
     machineId: z.string(),
     status: z.enum(["online", "offline"]).catch("offline"),
+    source: z.enum(["zed", "t3"]).catch("zed"),
     occurredAt: z.string(),
   }),
 );
+
+const SOURCE_LABEL = { zed: "Zed", t3: "T3 Code" } as const;
 
 const stamp = (iso: string) =>
   new Date(iso).toLocaleString("en-NZ", {
@@ -25,11 +28,11 @@ const stamp = (iso: string) =>
 
 /**
  * The heartbeats behind the readout above. Every row was written by
- * zed-convex when Josh opened or closed a project, so this is the raw feed
+ * project-sync when Josh opened or closed a project, so this is the raw feed
  * rather than a summary of it.
  */
 export default function SessionLog() {
-  const res = useQuery(api.presence.recent);
+  const res = useQuery(api.project.recent, {});
   if (res === undefined || res === null) return null;
 
   const events = schema.parse(res);
@@ -45,6 +48,7 @@ export default function SessionLog() {
             <tr className="label">
               <th className="py-2 font-normal">Time</th>
               <th className="py-2 font-normal">Project</th>
+              <th className="py-2 font-normal">Editor</th>
               <th className="py-2 font-normal">Machine</th>
               <th className="py-2 text-right font-normal">Status</th>
             </tr>
@@ -56,6 +60,7 @@ export default function SessionLog() {
                   {stamp(event.occurredAt)}
                 </td>
                 <td className="py-2.5 pr-6">{event.projectName}</td>
+                <td className="py-2.5 pr-6 text-trace">{SOURCE_LABEL[event.source]}</td>
                 <td className="py-2.5 pr-6 text-trace">{event.machineId}</td>
                 <td className="py-2.5 text-right">
                   <span className={event.status === "online" ? "text-live" : "text-trace"}>

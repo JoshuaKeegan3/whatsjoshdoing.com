@@ -4,14 +4,19 @@ import { useQuery } from "convex/react";
 import z from "zod";
 import { api } from "../convex/_generated/api";
 
-/** Shape of a row in the `t3PresenceEvents` table. */
+/** Shape of a row in the `projectEvents` table. */
 const schema = z.object({
   projectName: z.string(),
   machineId: z.string(),
   // Anything the editor sends that we don't recognise is treated as offline.
   status: z.enum(["online", "offline"]).catch("offline"),
+  // Which editor reported it. The two name things at different granularities,
+  // so the readout says which one rather than leaving the name ambiguous.
+  source: z.enum(["zed", "t3"]).catch("zed"),
   occurredAt: z.string(),
 });
+
+const SOURCE_LABEL = { zed: "Zed", t3: "T3 Code" } as const;
 
 /** A heartbeat older than this counts as offline whatever the row says. */
 const STALE_AFTER_MS = 60 * 60 * 1000;
@@ -36,7 +41,7 @@ function ago(from: number, to: number): string {
 }
 
 /**
- * The site's headline is written by Josh's editor. zed-convex broadcasts the
+ * The site's headline is written by Josh's editor. project-sync broadcasts the
  * open project, so the largest thing on the page is whatever he has open
  * right now. Offline, it falls back to the last thing he had open and when.
  *
@@ -45,7 +50,7 @@ function ago(from: number, to: number): string {
  * differs.
  */
 export default function LiveHero() {
-  const res = useQuery(api.presence.latest);
+  const res = useQuery(api.project.latest);
 
   if (res === undefined) {
     return <div className="h-48" aria-hidden />;
@@ -73,7 +78,7 @@ export default function LiveHero() {
         {presence && (
           // The machine id is an identifier, so it keeps the casing the editor sent.
           <span className="text-trace">
-            {presence.machineId}
+            {SOURCE_LABEL[presence.source]} · {presence.machineId}
             {!online && ` · last seen ${ago(occurredAt, now)}`}
           </span>
         )}
