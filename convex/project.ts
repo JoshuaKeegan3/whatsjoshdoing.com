@@ -1,6 +1,7 @@
 import { httpAction, internalMutation, query } from "./_generated/server";
 import { internal } from "./_generated/api";
 import { v } from "convex/values";
+import { readStrings } from "./validate";
 
 /** The current reading. `projectEvents` holds exactly one row. */
 export const latest = query({
@@ -49,24 +50,6 @@ export const record = internalMutation({
 
 const isStringArray = (value: unknown): value is string[] =>
   Array.isArray(value) && value.every((entry) => typeof entry === "string");
-
-/**
- * Pulls `keys` off an untrusted object, returning null unless every one is a
- * string. The result is keyed by the requested names, so callers read fields
- * without casting.
- */
-function readStrings<K extends string>(
-  source: Record<string, unknown>,
-  keys: readonly K[],
-): Record<K, string> | null {
-  const result = {} as Record<K, string>;
-  for (const key of keys) {
-    const value = source[key];
-    if (typeof value !== "string") return null;
-    result[key] = value;
-  }
-  return result;
-}
 
 /**
  * POST /api/project — records what Josh has open: a project in Zed or T3 Code,
