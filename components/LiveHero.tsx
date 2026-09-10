@@ -4,19 +4,17 @@ import { useQuery } from "convex/react";
 import z from "zod";
 import { api } from "../convex/_generated/api";
 
-/** Shape of a row in the `projectEvents` table. */
+/** Shape of the single row in the `projectEvents` table. */
 const schema = z.object({
   projectName: z.string(),
+  // The file open in Zed. Empty for the other sources, and for rows written
+  // before file tracking existed.
+  fileName: z.string().catch(""),
   machineId: z.string(),
   // Anything the editor sends that we don't recognise is treated as offline.
   status: z.enum(["online", "offline"]).catch("offline"),
-  // Which editor reported it. The two name things at different granularities,
-  // so the readout says which one rather than leaving the name ambiguous.
-  source: z.enum(["zed", "t3"]).catch("zed"),
   occurredAt: z.string(),
 });
-
-const SOURCE_LABEL = { zed: "Zed", t3: "T3 Code" } as const;
 
 /** A heartbeat older than this counts as offline whatever the row says. */
 const STALE_AFTER_MS = 60 * 60 * 1000;
@@ -43,7 +41,8 @@ function ago(from: number, to: number): string {
 /**
  * The site's headline is written by Josh's editor. project-sync broadcasts the
  * open project, so the largest thing on the page is whatever he has open
- * right now. Offline, it falls back to the last thing he had open and when.
+ * right now, with the open file named under it. Offline, it falls back to the
+ * last thing he had open and when.
  *
  * Aliveness comes from the value changing, not from an animation looping:
  * the `key` replays the rise transition only when the project actually
@@ -78,7 +77,7 @@ export default function LiveHero() {
         {presence && (
           // The machine id is an identifier, so it keeps the casing the editor sent.
           <span className="text-trace">
-            {SOURCE_LABEL[presence.source]} · {presence.machineId}
+            {presence.machineId}
             {!online && ` · last seen ${ago(occurredAt, now)}`}
           </span>
         )}
@@ -95,6 +94,10 @@ export default function LiveHero() {
           {project}
         </h1>
       </div>
+
+      {presence?.fileName && (
+        <p className="mt-3 break-all text-xs text-trace">{presence.fileName}</p>
+      )}
 
       <p className="mt-6 max-w-md text-xs leading-relaxed text-trace">
         {online

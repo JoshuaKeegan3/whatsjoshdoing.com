@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import LiveHero from "@/components/LiveHero";
-import SessionLog from "@/components/SessionLog";
 import QuietBoundary from "@/components/QuietBoundary";
 import GitHubStats from "@/components/GitHubStats";
 
